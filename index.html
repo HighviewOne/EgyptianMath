@@ -1,0 +1,2541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temple of Numbers — Egyptian Math</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold:       #C9A227;
+            --bright-gold:#FFD700;
+            --dark-gold:  #7A5C10;
+            --sand:       #F2E8C9;
+            --deep-sand:  #DDD0A8;
+            --night:      #07070F;
+            --deep-blue:  #0A1628;
+            --lapis:      #1B3F8A;
+            --turquoise:  #2ABFBF;
+            --papyrus:    #EDE3C0;
+            --light-text: #F9F4E8;
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Crimson Text', Georgia, serif;
+            background: var(--night);
+            color: var(--light-text);
+            font-size: 18px;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: linear-gradient(180deg,#040410 0%,#080820 50%,#1a140a 100%);
+        }
+
+        #starCanvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* CSS pyramid silhouettes */
+        .scene {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 320px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .pyr {
+            position: absolute;
+            bottom: 0;
+            width: 0;
+            height: 0;
+            border-style: solid;
+        }
+        .pyr-a {
+            border-width: 0 220px 340px 220px;
+            border-color: transparent transparent #13100a transparent;
+            left: 50%;
+            transform: translateX(-50%);
+            filter: drop-shadow(0 -5px 25px rgba(201,162,39,.25));
+        }
+        .pyr-b {
+            border-width: 0 145px 225px 145px;
+            border-color: transparent transparent #0e0c07 transparent;
+            left: calc(50% + 300px);
+        }
+        .pyr-c {
+            border-width: 0 100px 155px 100px;
+            border-color: transparent transparent #12100a transparent;
+            right: calc(50% + 270px);
+        }
+
+        .pyr-glow {
+            position: absolute;
+            bottom: 340px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 12px;
+            background: var(--bright-gold);
+            border-radius: 50%;
+            box-shadow: 0 0 20px 5px var(--bright-gold), 0 0 60px 20px rgba(255,215,0,.4);
+            animation: capGlow 2.4s ease-in-out infinite alternate;
+        }
+
+        @keyframes capGlow {
+            from { box-shadow: 0 0 12px 3px var(--bright-gold), 0 0 30px 10px rgba(255,215,0,.3); }
+            to   { box-shadow: 0 0 28px 8px var(--bright-gold), 0 0 80px 30px rgba(255,215,0,.6); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 2rem 1.5rem;
+        }
+
+        .eyebrow {
+            font-family: 'Cinzel', serif;
+            font-size: .85rem;
+            letter-spacing: 8px;
+            color: var(--turquoise);
+            text-transform: uppercase;
+            margin-bottom: .8rem;
+        }
+
+        .hiero-row {
+            font-size: 1.8rem;
+            letter-spacing: .8rem;
+            color: var(--dark-gold);
+            margin-bottom: .8rem;
+        }
+
+        .hero-title {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(2.8rem,9vw,6.5rem);
+            font-weight: 900;
+            color: var(--bright-gold);
+            text-shadow: 0 0 50px rgba(255,215,0,.5), 0 2px 4px rgba(0,0,0,.9);
+            line-height: 1.05;
+            margin-bottom: .4rem;
+        }
+
+        .hero-sub {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(.9rem,2.5vw,1.35rem);
+            color: var(--sand);
+            letter-spacing: 2px;
+            font-style: italic;
+            margin-bottom: 1.8rem;
+        }
+
+        .hero-desc {
+            font-size: 1.1rem;
+            color: var(--deep-sand);
+            max-width: 580px;
+            margin: 0 auto 2.2rem;
+        }
+
+        .cta {
+            display: inline-block;
+            padding: .9rem 3rem;
+            background: linear-gradient(135deg,var(--dark-gold),var(--gold),var(--dark-gold));
+            color: var(--night);
+            font-family: 'Cinzel', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            border: 2px solid var(--bright-gold);
+            cursor: pointer;
+            transition: all .3s;
+            clip-path: polygon(12px 0%,calc(100% - 12px) 0%,100% 50%,calc(100% - 12px) 100%,12px 100%,0% 50%);
+        }
+        .cta:hover {
+            background: linear-gradient(135deg,var(--gold),var(--bright-gold),var(--gold));
+            box-shadow: 0 0 35px rgba(255,215,0,.6);
+            transform: scale(1.05);
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            font-family: 'Cinzel', serif;
+            font-size: .75rem;
+            letter-spacing: 4px;
+            color: var(--deep-sand);
+            animation: bob 2s ease-in-out infinite;
+        }
+        @keyframes bob {
+            0%,100% { transform: translateX(-50%) translateY(0); }
+            50%      { transform: translateX(-50%) translateY(6px); }
+        }
+
+        /* ===== NAV ===== */
+        .main-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(7,7,15,.96);
+            border-bottom: 2px solid var(--dark-gold);
+        }
+
+        .nav-inner {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            padding: .9rem 1.2rem;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            color: var(--sand);
+            font-family: 'Cinzel', serif;
+            font-size: .8rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all .25s;
+            white-space: nowrap;
+        }
+        .nav-btn:hover,
+        .nav-btn.active {
+            color: var(--bright-gold);
+            border-bottom-color: var(--bright-gold);
+        }
+
+        /* ===== SECTIONS ===== */
+        .section {
+            display: none;
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 3.5rem 1.5rem 4rem;
+        }
+        .section.active { display: block; }
+
+        .sec-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+        .sec-icon {
+            font-size: 3.5rem;
+            display: block;
+            margin-bottom: .6rem;
+        }
+        .sec-title {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(1.7rem,4vw,2.8rem);
+            color: var(--bright-gold);
+            margin-bottom: .3rem;
+        }
+        .sec-sub {
+            font-style: italic;
+            color: var(--turquoise);
+            font-size: 1rem;
+        }
+
+        /* ===== CARDS ===== */
+        .card {
+            background: linear-gradient(135deg,rgba(25,18,6,.92),rgba(12,10,20,.95));
+            border: 1px solid var(--dark-gold);
+            border-radius: 3px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg,transparent,var(--gold),transparent);
+        }
+
+        .card-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.35rem;
+            color: var(--gold);
+            margin-bottom: .9rem;
+        }
+
+        .myth-box {
+            background: linear-gradient(135deg,rgba(27,63,138,.25),rgba(10,22,40,.45));
+            border-left: 4px solid var(--lapis);
+            padding: 1.3rem 1.5rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+            border-radius: 0 3px 3px 0;
+        }
+        .myth-label {
+            font-family: 'Cinzel', serif;
+            font-size: .75rem;
+            color: var(--turquoise);
+            letter-spacing: 3px;
+            font-style: normal;
+            display: block;
+            margin-bottom: .4rem;
+        }
+
+        .math-box {
+            background: rgba(201,162,39,.08);
+            border: 1px solid rgba(201,162,39,.4);
+            border-radius: 3px;
+            padding: 1.4rem;
+            margin: 1.3rem 0;
+        }
+        .math-label {
+            font-family: 'Cinzel', serif;
+            font-size: .7rem;
+            color: var(--gold);
+            letter-spacing: 3px;
+            margin-bottom: .6rem;
+            display: block;
+        }
+        .formula {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 1.45rem;
+            color: var(--bright-gold);
+            text-align: center;
+            padding: .4rem 0;
+        }
+
+        strong { color: var(--gold); }
+        em { color: var(--turquoise); }
+
+        ul, ol { margin: .5rem 0 .5rem 1.5rem; }
+        li { margin: .3rem 0; }
+
+        /* ===== FACT GRID ===== */
+        .fact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
+            gap: 1rem;
+            margin: 1.3rem 0;
+        }
+        .fact-card {
+            background: rgba(201,162,39,.07);
+            border: 1px solid rgba(201,162,39,.3);
+            border-radius: 3px;
+            padding: 1.1rem;
+            text-align: center;
+        }
+        .fact-num {
+            font-family: 'Cinzel', serif;
+            font-size: 1.9rem;
+            color: var(--bright-gold);
+        }
+        .fact-lbl {
+            font-size: .85rem;
+            color: var(--sand);
+            margin-top: .25rem;
+        }
+
+        /* ===== EYE GRID ===== */
+        .eye-svg-wrap {
+            display: flex;
+            justify-content: center;
+            margin: 1.5rem 0 .5rem;
+        }
+        .eye-svg-wrap svg { max-width: 340px; width: 100%; }
+
+        .eye-grid {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: .9rem;
+            margin: 1.2rem 0;
+        }
+        .eye-part {
+            background: rgba(201,162,39,.08);
+            border: 1px solid var(--dark-gold);
+            border-radius: 3px;
+            padding: 1rem .8rem;
+            text-align: center;
+            transition: all .25s;
+        }
+        .eye-part:hover {
+            background: rgba(201,162,39,.22);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 18px rgba(201,162,39,.25);
+        }
+        .eye-frac {
+            font-family: 'Cinzel', serif;
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: var(--bright-gold);
+        }
+        .eye-name {
+            font-size: .8rem;
+            color: var(--turquoise);
+            margin-top: .2rem;
+        }
+        .eye-sym { font-size: 1.4rem; }
+
+        /* ===== GOD INTRO ===== */
+        .god-row {
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+        .god-portrait {
+            width: 190px;
+            min-width: 160px;
+            flex-shrink: 0;
+        }
+        .portrait-box {
+            background: linear-gradient(160deg,rgba(27,63,138,.35),rgba(20,14,5,.8));
+            border: 2px solid var(--gold);
+            border-radius: 3px;
+            padding: 1.8rem 1rem;
+            text-align: center;
+        }
+        .god-icon { font-size: 4.5rem; display: block; }
+        .god-name-txt {
+            font-family: 'Cinzel', serif;
+            color: var(--gold);
+            font-size: 1.15rem;
+            margin-top: .4rem;
+        }
+        .god-role {
+            font-size: .8rem;
+            color: var(--turquoise);
+            font-style: italic;
+        }
+
+        /* ===== LESSON NAV MINI ===== */
+        .lesson-list { list-style: none; padding: 0; }
+        .lesson-list li {
+            padding: .7rem 0;
+            border-bottom: 1px solid rgba(201,162,39,.2);
+            cursor: pointer;
+            transition: color .2s;
+        }
+        .lesson-list li:last-child { border-bottom: none; }
+        .lesson-list li:hover { color: var(--bright-gold); }
+        .lesson-list li span.lnav-icon { color: var(--gold); margin-right: .5rem; }
+
+        /* ===== PRACTICE ===== */
+        .practice-head {
+            font-family: 'Cinzel', serif;
+            color: var(--turquoise);
+            font-size: 1rem;
+            letter-spacing: 2px;
+            margin-bottom: 1.2rem;
+        }
+
+        .prob {
+            background: rgba(27,63,138,.15);
+            border: 1px solid rgba(42,191,191,.28);
+            border-radius: 3px;
+            padding: 1.4rem;
+            margin-bottom: 1.4rem;
+        }
+        .prob-text { margin-bottom: 1rem; font-size: 1.05rem; }
+
+        .opts {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: .5rem;
+        }
+        .opt {
+            padding: .65rem 1rem;
+            background: rgba(201,162,39,.08);
+            border: 1px solid var(--dark-gold);
+            color: var(--sand);
+            font-family: 'Crimson Text', serif;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 2px;
+            text-align: left;
+            transition: all .2s;
+        }
+        .opt:hover:not(:disabled) {
+            background: rgba(201,162,39,.25);
+            border-color: var(--gold);
+        }
+        .opt:disabled { cursor: default; }
+        .opt.correct { background:rgba(0,140,0,.3); border-color:#00cc00; color:#9fffaa; }
+        .opt.wrong   { background:rgba(140,0,0,.3); border-color:#cc0000; color:#ffaaaa; }
+        .opt.reveal  { background:rgba(0,80,0,.2);  border-color:rgba(0,180,0,.5); color:#7fff8a; }
+
+        .prob-fb {
+            margin-top: .9rem;
+            padding: .7rem 1rem;
+            border-radius: 3px;
+            font-style: italic;
+            font-size: .95rem;
+            display: none;
+        }
+        .prob-fb.show-ok { display:block; background:rgba(0,120,0,.2); border:1px solid #00cc00; color:#9fffaa; }
+        .prob-fb.show-no { display:block; background:rgba(120,0,0,.2); border:1px solid #cc0000; color:#ffaaaa; }
+
+        /* ===== QUIZ ===== */
+        .quiz-wrap { max-width: 700px; margin: 0 auto; }
+
+        .q-progress {
+            display: flex;
+            gap: .45rem;
+            justify-content: center;
+            margin-bottom: 1.8rem;
+            flex-wrap: wrap;
+        }
+        .qdot {
+            width: 13px; height: 13px;
+            border-radius: 50%;
+            border: 2px solid var(--dark-gold);
+            background: rgba(201,162,39,.15);
+            transition: all .3s;
+        }
+        .qdot.current { background:var(--turquoise); border-color:var(--turquoise); box-shadow:0 0 8px var(--turquoise); }
+        .qdot.q-ok    { background:#00cc00; border-color:#00cc00; }
+        .qdot.q-no    { background:#cc0000; border-color:#cc0000; }
+
+        .q-box {
+            background: linear-gradient(135deg,rgba(25,18,6,.95),rgba(10,12,25,.96));
+            border: 2px solid var(--dark-gold);
+            border-radius: 3px;
+            padding: 2.2rem;
+        }
+
+        .q-num {
+            font-family: 'Cinzel', serif;
+            font-size: .8rem;
+            color: var(--turquoise);
+            letter-spacing: 3px;
+            margin-bottom: .7rem;
+        }
+        .q-cat {
+            display: inline-block;
+            padding: .18rem .7rem;
+            background: rgba(201,162,39,.12);
+            border: 1px solid var(--dark-gold);
+            font-size: .75rem;
+            color: var(--gold);
+            letter-spacing: 2px;
+            font-family: 'Cinzel', serif;
+            margin-bottom: 1.3rem;
+            border-radius: 2px;
+        }
+        .q-text {
+            font-size: 1.15rem;
+            line-height: 1.65;
+            margin-bottom: 1.8rem;
+        }
+        .q-opts { display: grid; gap: .7rem; margin-bottom: 1.3rem; }
+
+        .q-opt {
+            padding: .9rem 1.3rem;
+            background: rgba(201,162,39,.07);
+            border: 1px solid var(--dark-gold);
+            color: var(--sand);
+            font-family: 'Crimson Text', serif;
+            font-size: 1.05rem;
+            cursor: pointer;
+            border-radius: 2px;
+            text-align: left;
+            display: flex;
+            gap: .9rem;
+            align-items: flex-start;
+            transition: all .2s;
+        }
+        .q-opt:hover:not(:disabled) {
+            background: rgba(201,162,39,.2);
+            border-color: var(--gold);
+            transform: translateX(4px);
+        }
+        .q-opt:disabled { cursor: default; }
+        .q-opt.sel-ok    { background:rgba(0,130,0,.25); border-color:#00cc00; color:#aaffaa; }
+        .q-opt.sel-no    { background:rgba(130,0,0,.25); border-color:#cc0000; color:#ffaaaa; }
+        .q-opt.reveal-ok { background:rgba(0,80,0,.15);  border-color:rgba(0,160,0,.5); color:#88ff88; }
+
+        .opt-ltr {
+            font-family: 'Cinzel', serif;
+            font-size: .85rem;
+            color: var(--gold);
+            font-weight: 700;
+            min-width: 18px;
+            padding-top: 1px;
+        }
+
+        .q-fb {
+            padding: .9rem 1.2rem;
+            border-radius: 3px;
+            font-style: italic;
+            font-size: .95rem;
+            margin-bottom: .9rem;
+            display: none;
+        }
+        .q-fb.fb-ok { display:block; background:rgba(0,100,0,.3); border:1px solid #00cc00; color:#aaffaa; }
+        .q-fb.fb-no { display:block; background:rgba(100,0,0,.3); border:1px solid #cc0000; color:#ffaaaa; }
+
+        .q-next {
+            padding: .75rem 1.8rem;
+            background: linear-gradient(135deg,var(--dark-gold),var(--gold));
+            border: none;
+            color: var(--night);
+            font-family: 'Cinzel', serif;
+            font-size: .95rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all .25s;
+            display: none;
+            border-radius: 2px;
+        }
+        .q-next.show {
+            display: inline-block;
+        }
+        .q-next:hover { background:linear-gradient(135deg,var(--gold),var(--bright-gold)); box-shadow:0 4px 18px rgba(201,162,39,.5); }
+
+        /* ===== RESULTS ===== */
+        .results {
+            text-align: center;
+            display: none;
+        }
+        .results.show { display: block; }
+
+        .res-title {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(1.4rem,4vw,2.3rem);
+            color: var(--bright-gold);
+            margin-bottom: .8rem;
+        }
+        .score-big {
+            font-family: 'Cinzel', serif;
+            font-size: 4.5rem;
+            color: var(--bright-gold);
+            text-shadow: 0 0 30px rgba(255,215,0,.6);
+            margin: .8rem 0;
+        }
+        .rank-badge {
+            display: inline-block;
+            padding: .8rem 2rem;
+            border: 2px solid var(--gold);
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            color: var(--bright-gold);
+            margin: .9rem 0;
+        }
+        .rank-badge::before, .rank-badge::after { content:'☥'; margin:0 .7rem; color:var(--dark-gold); }
+        .rank-desc {
+            font-size: 1.05rem;
+            color: var(--sand);
+            max-width: 480px;
+            margin: .8rem auto 1.8rem;
+        }
+        .restart-btn {
+            padding: .75rem 2rem;
+            background: linear-gradient(135deg,rgba(27,63,138,.4),rgba(42,191,191,.25));
+            border: 1px solid var(--turquoise);
+            color: var(--turquoise);
+            font-family: 'Cinzel', serif;
+            font-size: .95rem;
+            cursor: pointer;
+            letter-spacing: 2px;
+            transition: all .25s;
+            border-radius: 2px;
+        }
+        .restart-btn:hover { background:rgba(42,191,191,.3); box-shadow:0 4px 18px rgba(42,191,191,.4); }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: rgba(4,4,10,.97);
+            border-top: 1px solid var(--dark-gold);
+            text-align: center;
+            padding: 1.8rem;
+            color: rgba(242,232,201,.45);
+            font-size: .88rem;
+        }
+        .footer-ankh { font-size:1.3rem; color:var(--dark-gold); margin:.3rem; }
+
+        /* ===== SCROLL BAR ===== */
+        ::-webkit-scrollbar { width: 7px; }
+        ::-webkit-scrollbar-track { background: var(--night); }
+        ::-webkit-scrollbar-thumb { background: var(--dark-gold); border-radius: 4px; }
+
+        /* ===== NUMERAL CONVERTER ===== */
+        .hiero-table {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: .8rem;
+            margin: 1.3rem 0;
+        }
+        .hiero-cell {
+            background: rgba(201,162,39,.07);
+            border: 1px solid var(--dark-gold);
+            border-radius: 3px;
+            padding: 1rem .7rem;
+            text-align: center;
+            transition: all .25s;
+        }
+        .hiero-cell:hover {
+            background: rgba(201,162,39,.2);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 18px rgba(201,162,39,.25);
+        }
+        .hiero-glyph {
+            font-size: 2.5rem;
+            line-height: 1.2;
+            color: var(--bright-gold);
+        }
+        .hiero-value {
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            color: var(--gold);
+            margin: .3rem 0 .1rem;
+        }
+        .hiero-desc {
+            font-size: .78rem;
+            color: var(--turquoise);
+        }
+
+        .converter-box {
+            background: linear-gradient(135deg,rgba(25,18,6,.95),rgba(10,12,25,.96));
+            border: 2px solid var(--gold);
+            border-radius: 3px;
+            padding: 2rem;
+            text-align: center;
+            margin: 1.5rem 0;
+        }
+        .conv-input {
+            width: 200px;
+            padding: .7rem 1rem;
+            background: rgba(201,162,39,.08);
+            border: 2px solid var(--dark-gold);
+            border-radius: 2px;
+            color: var(--bright-gold);
+            font-family: 'Cinzel', serif;
+            font-size: 1.4rem;
+            text-align: center;
+            outline: none;
+            transition: border-color .2s;
+        }
+        .conv-input:focus { border-color: var(--bright-gold); }
+        .conv-input::placeholder { color: rgba(201,162,39,.4); font-size: 1rem; }
+        .conv-result {
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            letter-spacing: .2rem;
+            color: var(--bright-gold);
+            min-height: 3.5rem;
+            margin: 1rem 0 .5rem;
+            line-height: 1.4;
+            word-break: break-all;
+        }
+        .conv-hint {
+            font-size: .85rem;
+            color: var(--sand);
+            font-style: italic;
+        }
+        .conv-btn {
+            margin-top: 1rem;
+            padding: .6rem 1.8rem;
+            background: linear-gradient(135deg, var(--dark-gold), var(--gold));
+            border: none;
+            color: var(--night);
+            font-family: 'Cinzel', serif;
+            font-size: .9rem;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: 2px;
+            letter-spacing: 2px;
+            transition: all .2s;
+        }
+        .conv-btn:hover { background: linear-gradient(135deg, var(--gold), var(--bright-gold)); box-shadow: 0 4px 16px rgba(255,215,0,.4); }
+
+        /* ===== HIEROGLYPH QUIZ ===== */
+        .hq-scorebar {
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+            margin-bottom: 1.2rem;
+            flex-wrap: wrap;
+        }
+        .hq-score-item { text-align: center; }
+        .hq-score-num {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            color: var(--bright-gold);
+            line-height: 1.1;
+        }
+        .hq-score-lbl {
+            font-family: 'Cinzel', serif;
+            font-size: .68rem;
+            color: var(--turquoise);
+            letter-spacing: 2px;
+        }
+        .hq-display {
+            font-size: clamp(2rem,6vw,3rem);
+            letter-spacing: .35rem;
+            color: var(--bright-gold);
+            min-height: 5.5rem;
+            margin: 1rem 0;
+            padding: 1.3rem 1rem;
+            background: rgba(201,162,39,.05);
+            border: 1px solid rgba(201,162,39,.28);
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            word-break: break-all;
+            line-height: 1.5;
+            text-align: center;
+        }
+        .hq-input-row {
+            display: flex;
+            gap: .7rem;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: .5rem 0;
+        }
+        .hq-fb {
+            padding: .6rem 1rem;
+            border-radius: 3px;
+            font-size: .95rem;
+            min-height: 2rem;
+            margin-top: .7rem;
+            font-style: italic;
+        }
+        .hq-ok { background:rgba(0,120,0,.2); border:1px solid #00cc00; color:#9fffaa; }
+        .hq-no { background:rgba(120,0,0,.2); border:1px solid #cc0000; color:#ffaaaa; }
+        .hq-skip-btn {
+            padding: .55rem 1.2rem;
+            background: transparent;
+            border: 1px solid rgba(201,162,39,.4);
+            color: rgba(201,162,39,.6);
+            font-family: 'Cinzel', serif;
+            font-size: .75rem;
+            cursor: pointer;
+            border-radius: 2px;
+            letter-spacing: 1px;
+            transition: all .2s;
+        }
+        .hq-skip-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+        /* ===== PYRAMID BUILDER ===== */
+        .pyr-builder-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.8rem;
+            align-items: start;
+        }
+        #pyrCanvas {
+            display: block;
+            width: 100%;
+            border: 1px solid rgba(201,162,39,.2);
+            border-radius: 3px;
+            background: rgba(5,5,18,.8);
+        }
+        .slider-row {
+            display: flex;
+            align-items: center;
+            gap: .8rem;
+            margin: .85rem 0;
+        }
+        .slider-lbl {
+            font-family: 'Cinzel', serif;
+            font-size: .78rem;
+            color: var(--gold);
+            min-width: 72px;
+        }
+        .pyr-slider {
+            flex: 1;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 5px;
+            background: rgba(201,162,39,.25);
+            border-radius: 3px;
+            outline: none;
+            cursor: pointer;
+        }
+        .pyr-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px; height: 20px;
+            border-radius: 50%;
+            background: var(--bright-gold);
+            box-shadow: 0 0 10px rgba(255,215,0,.55);
+            cursor: pointer;
+        }
+        .pyr-slider::-moz-range-thumb {
+            width: 20px; height: 20px;
+            border-radius: 50%;
+            background: var(--bright-gold);
+            border: none;
+            cursor: pointer;
+        }
+        .slider-val {
+            font-family: 'Cinzel', serif;
+            font-size: 1rem;
+            color: var(--bright-gold);
+            min-width: 52px;
+            text-align: right;
+        }
+        .pyr-stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: .65rem;
+            margin-top: 1rem;
+        }
+        .pyr-stat {
+            background: rgba(201,162,39,.07);
+            border: 1px solid rgba(201,162,39,.28);
+            border-radius: 3px;
+            padding: .85rem .75rem;
+            text-align: center;
+        }
+        .pyr-stat-lbl {
+            font-family: 'Cinzel', serif;
+            font-size: .62rem;
+            color: var(--turquoise);
+            letter-spacing: 2px;
+            margin-bottom: .3rem;
+        }
+        .pyr-stat-val {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            color: var(--bright-gold);
+        }
+        .pyr-stat-eq {
+            font-size: .76rem;
+            color: var(--sand);
+            margin-top: .2rem;
+            font-style: italic;
+        }
+        @media (max-width: 620px) {
+            .pyr-builder-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ===== SHOW-HOW SOLUTION ===== */
+        .show-how-btn {
+            display: inline-block;
+            margin-top: .65rem;
+            padding: .4rem 1.1rem;
+            background: rgba(201,162,39,.08);
+            border: 1px solid rgba(201,162,39,.38);
+            color: var(--gold);
+            font-family: 'Cinzel', serif;
+            font-size: .75rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            border-radius: 2px;
+            transition: all .2s;
+        }
+        .show-how-btn:hover {
+            background: rgba(201,162,39,.22);
+            border-color: var(--gold);
+        }
+        .solution-panel {
+            display: none;
+            margin-top: .75rem;
+            padding: 1rem 1.2rem;
+            background: linear-gradient(135deg,rgba(18,13,4,.95),rgba(8,9,22,.95));
+            border: 1px solid rgba(201,162,39,.3);
+            border-radius: 3px;
+            animation: fadeSlide .28s ease;
+        }
+        .solution-panel.open { display: block; }
+        @keyframes fadeSlide {
+            from { opacity:0; transform:translateY(-5px); }
+            to   { opacity:1; transform:translateY(0); }
+        }
+        .sol-title {
+            font-family: 'Cinzel', serif;
+            font-size: .68rem;
+            color: var(--turquoise);
+            letter-spacing: 3px;
+            margin-bottom: .75rem;
+        }
+        .sol-step {
+            display: flex;
+            gap: .65rem;
+            align-items: baseline;
+            padding: .38rem 0;
+            border-bottom: 1px solid rgba(201,162,39,.09);
+            font-size: .93rem;
+            color: var(--sand);
+            line-height: 1.5;
+        }
+        .sol-step:last-child { border-bottom: none; }
+        .sol-num {
+            font-family: 'Cinzel', serif;
+            font-size: .68rem;
+            color: var(--dark-gold);
+            min-width: 16px;
+            font-weight: 700;
+            padding-top: 2px;
+        }
+
+        /* ===== NAV BADGE ===== */
+        .nav-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 0;
+            height: 14px;
+            border-radius: 50%;
+            background: #00cc44;
+            color: var(--night);
+            font-size: .62rem;
+            font-weight: 900;
+            margin-left: 0;
+            overflow: hidden;
+            vertical-align: middle;
+            transition: width .3s ease, margin-left .3s ease,
+                        box-shadow .3s ease;
+        }
+        .nav-badge.earned {
+            width: 14px;
+            margin-left: .4rem;
+            box-shadow: 0 0 6px rgba(0,204,68,.6);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width:600px) {
+            .eye-grid   { grid-template-columns: repeat(2,1fr); }
+            .opts       { grid-template-columns: 1fr; }
+            .god-row    { flex-direction: column; }
+            .god-portrait { width: 100%; }
+            .nav-btn    { padding: .7rem .7rem; font-size: .72rem; }
+            .pyr-b, .pyr-c { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ============================================================ HERO -->
+<section class="hero" id="top">
+    <canvas id="starCanvas"></canvas>
+
+    <div class="scene">
+        <div class="pyr pyr-c"></div>
+        <div class="pyr pyr-a"></div>
+        <div class="pyr pyr-b"></div>
+        <div class="pyr-glow"></div>
+    </div>
+
+    <div class="hero-content">
+        <p class="eyebrow">☥ &nbsp; The Sacred Knowledge Awaits &nbsp; ☥</p>
+        <p class="hiero-row">𓂀 &nbsp; 𓃭 &nbsp; 𓆣 &nbsp; 𓅓 &nbsp; 𓂀</p>
+        <h1 class="hero-title">Temple of Numbers</h1>
+        <p class="hero-sub">Mathematics Through the Eyes of Ancient Egypt</p>
+        <p class="hero-desc">Journey along the sacred Nile into temples carved with numbers. Learn fractions, geometry, and algebra as the ancient Egyptians did — guided by the god Thoth himself.</p>
+        <button class="cta" onclick="enterTemple()">Enter the Temple</button>
+    </div>
+
+    <p class="scroll-hint">▼ &nbsp; SCROLL &nbsp; ▼</p>
+</section>
+
+<!-- ============================================================ NAV -->
+<nav class="main-nav" id="mainNav">
+    <div class="nav-inner">
+        <button class="nav-btn active" data-sec="intro"    onclick="show('intro')">☥ Introduction</button>
+        <button class="nav-btn"        data-sec="numbers"   onclick="show('numbers')">𓏤 Numbers</button>
+        <button class="nav-btn"        data-sec="fractions" onclick="show('fractions')">𓂀 Fractions</button>
+        <button class="nav-btn"        data-sec="geometry"  onclick="show('geometry')">△ Geometry</button>
+        <button class="nav-btn"        data-sec="algebra"   onclick="show('algebra')">∞ Algebra</button>
+        <button class="nav-btn"        data-sec="patterns"  onclick="show('patterns')">✦ Patterns</button>
+        <button class="nav-btn"        data-sec="quiz"      onclick="show('quiz')">⊕ Grand Quiz</button>
+    </div>
+</nav>
+
+<!-- ============================================================ NUMBERS -->
+<section class="section" id="sec-numbers">
+    <div class="sec-header">
+        <span class="sec-icon">𓏤</span>
+        <h2 class="sec-title">Egyptian Numbers</h2>
+        <p class="sec-sub">The World's First Written Number System</p>
+    </div>
+
+    <div class="card">
+        <div class="myth-box">
+            <span class="myth-label">✦ THOTH INVENTS WRITING AND NUMBERS</span>
+            <p>According to Egyptian legend, Thoth invented writing, language, and numbers all at once — gifts to humanity so they could record the movements of the stars, measure the floodwaters of the Nile, and keep track of grain. Egyptian hieroglyphic numbers appear on temple walls dating back to <strong>3100 BCE</strong> — over 5,000 years ago.</p>
+        </div>
+
+        <h3 class="card-title">The Seven Sacred Symbols</h3>
+        <p>Egyptians used a <em>base-10 system</em> — just like ours — but instead of place value, they used <strong>repetition</strong>. Each symbol was repeated as many times as needed and all symbols were added together.</p>
+
+        <div class="hiero-table">
+            <div class="hiero-cell">
+                <div class="hiero-glyph">𓏤</div>
+                <div class="hiero-value">1</div>
+                <div class="hiero-desc">Single stroke — a unit</div>
+            </div>
+            <div class="hiero-cell">
+                <div class="hiero-glyph">𓎆</div>
+                <div class="hiero-value">10</div>
+                <div class="hiero-desc">Heel bone (hobble)</div>
+            </div>
+            <div class="hiero-cell">
+                <div class="hiero-glyph">𓍢</div>
+                <div class="hiero-value">100</div>
+                <div class="hiero-desc">Coiled rope</div>
+            </div>
+            <div class="hiero-cell">
+                <div class="hiero-glyph">𓆼</div>
+                <div class="hiero-value">1,000</div>
+                <div class="hiero-desc">Lotus flower</div>
+            </div>
+            <div class="hiero-cell">
+                <div class="hiero-glyph">𓂭</div>
+                <div class="hiero-value">10,000</div>
+                <div class="hiero-desc">Bent finger</div>
+            </div>
+            <div class="hiero-cell">
+                <div class="hiero-glyph">𓆐</div>
+                <div class="hiero-value">100,000</div>
+                <div class="hiero-desc">Tadpole / frog</div>
+            </div>
+            <div class="hiero-cell">
+                <div class="hiero-glyph">𓁨</div>
+                <div class="hiero-value">1,000,000</div>
+                <div class="hiero-desc">God Heh (infinity)</div>
+            </div>
+        </div>
+
+        <div class="math-box">
+            <span class="math-label">EXAMPLE: HOW TO WRITE 2,347</span>
+            <p style="font-size:1.1rem;line-height:2.3;color:var(--sand);text-align:center;">
+                2,347 &nbsp;=&nbsp; 2×1000 &nbsp;+&nbsp; 3×100 &nbsp;+&nbsp; 4×10 &nbsp;+&nbsp; 7×1<br>
+                <span style="font-size:2rem;letter-spacing:.3rem;">𓆼𓆼 &nbsp; 𓍢𓍢𓍢 &nbsp; 𓎆𓎆𓎆𓎆 &nbsp; 𓏤𓏤𓏤𓏤𓏤𓏤𓏤</span>
+            </p>
+        </div>
+
+        <p><strong>Key difference from our system:</strong> In our modern system, the position of a digit tells us its value (place value). Egyptians had no concept of zero as a placeholder — they simply omitted symbols they didn't need. The symbol 𓁨 (Heh, god of infinity) meant "a million" or "countless" — Egyptians literally used a god to represent the largest number they commonly needed!</p>
+    </div>
+
+    <div class="card">
+        <h3 class="card-title">⚙ Number Converter — Try It Yourself!</h3>
+        <p>Type any number from 1 to 999,999 and see it written in ancient Egyptian hieroglyphics:</p>
+
+        <div class="converter-box">
+            <input class="conv-input" type="number" id="convInput" min="1" max="999999" placeholder="e.g. 42" oninput="convertNum()">
+            <div class="conv-result" id="convResult">𓏤𓏤𓏤𓏤𓏤𓏤𓏤𓏤𓏤𓏤</div>
+            <div class="conv-hint" id="convHint">= 10 &nbsp;·&nbsp; Try typing your age, your birth year, or the Great Pyramid's height (146)!</div>
+            <button class="conv-btn" onclick="randomNum()">⚄ Random Number</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3 class="card-title">⚡ Hieroglyph Speed Quiz</h3>
+        <p>A hieroglyphic number will appear. Type what it equals in our modern digits and press <em>Enter</em> (or Check). How long can you keep your streak alive?</p>
+
+        <div style="margin-top:1.4rem;">
+            <div class="hq-scorebar">
+                <div class="hq-score-item">
+                    <div class="hq-score-num" id="hqStreak">0</div>
+                    <div class="hq-score-lbl">STREAK</div>
+                </div>
+                <div class="hq-score-item">
+                    <div class="hq-score-num" id="hqCorrect">0</div>
+                    <div class="hq-score-lbl">CORRECT</div>
+                </div>
+                <div class="hq-score-item">
+                    <div class="hq-score-num" id="hqTotal">0</div>
+                    <div class="hq-score-lbl">TOTAL</div>
+                </div>
+            </div>
+
+            <div class="hq-display" id="hqDisplay">𓆼𓆼𓍢𓎆𓎆𓎆𓏤𓏤𓏤𓏤𓏤</div>
+
+            <div class="hq-input-row">
+                <input class="conv-input" type="number" id="hqInput"
+                       placeholder="Your answer…" style="width:190px;"
+                       onkeydown="if(event.key==='Enter')submitHQ()">
+                <button class="conv-btn" onclick="submitHQ()">Check ✓</button>
+                <button class="hq-skip-btn" onclick="skipHQ()">Skip →</button>
+            </div>
+            <div class="hq-fb" id="hqFb"></div>
+        </div>
+    </div>
+
+    <div class="card">
+        <p class="practice-head">𓏤 PRACTICE — Read the Sacred Inscriptions</p>
+
+        <div class="prob" id="np1">
+            <p class="prob-text"><strong>Problem 1.</strong> A temple inscription reads: &nbsp;<span style="font-size:1.8rem;color:var(--bright-gold);">𓆼𓆼𓆼 &nbsp; 𓍢𓍢 &nbsp; 𓎆𓎆𓎆𓎆𓎆 &nbsp; 𓏤𓏤𓏤𓏤𓏤𓏤𓏤</span><br>
+            How many workers does it record?</p>
+            <div class="opts">
+                <button class="opt" onclick="check(this,'np1',false)">A) &nbsp;3,025</button>
+                <button class="opt" onclick="check(this,'np1',true )">B) &nbsp;3,257</button>
+                <button class="opt" onclick="check(this,'np1',false)">C) &nbsp;32,570</button>
+                <button class="opt" onclick="check(this,'np1',false)">D) &nbsp;30,257</button>
+            </div>
+            <div class="prob-fb" id="fb-np1"></div>
+        </div>
+
+        <div class="prob" id="np2">
+            <p class="prob-text"><strong>Problem 2.</strong> How would an Egyptian scribe write <strong>1,024</strong> in hieroglyphics?</p>
+            <div class="opts">
+                <button class="opt" onclick="check(this,'np2',false)">A) &nbsp;𓆼𓍢𓍢𓎆𓎆𓏤𓏤𓏤𓏤</button>
+                <button class="opt" onclick="check(this,'np2',true )">B) &nbsp;𓆼 𓎆𓎆 𓏤𓏤𓏤𓏤</button>
+                <button class="opt" onclick="check(this,'np2',false)">C) &nbsp;𓆼𓆼𓎆𓎆𓏤𓏤𓏤𓏤</button>
+                <button class="opt" onclick="check(this,'np2',false)">D) &nbsp;𓆼𓍢𓎆𓎆𓎆𓎆𓏤𓏤𓏤𓏤</button>
+            </div>
+            <div class="prob-fb" id="fb-np2"></div>
+        </div>
+
+        <div class="prob" id="np3">
+            <p class="prob-text"><strong>Problem 3.</strong> The scribe Ahmes wrote the number of days in 10 years in the Rhind Papyrus. One Egyptian year = 365 days. What is 365 × 10 = <strong>3,650</strong>?<br>How many lotus flowers (𓆼 = 1,000), coiled ropes (𓍢 = 100), and heel bones (𓎆 = 10) does he need?</p>
+            <div class="opts">
+                <button class="opt" onclick="check(this,'np3',false)">A) &nbsp;3 lotus, 65 heel bones</button>
+                <button class="opt" onclick="check(this,'np3',true )">B) &nbsp;3 lotus, 6 ropes, 5 heel bones</button>
+                <button class="opt" onclick="check(this,'np3',false)">C) &nbsp;36 lotus, 5 heel bones</button>
+                <button class="opt" onclick="check(this,'np3',false)">D) &nbsp;3 lotus, 5 ropes</button>
+            </div>
+            <div class="prob-fb" id="fb-np3"></div>
+        </div>
+
+        <div style="margin-top:1.5rem;text-align:right;">
+            <button class="cta" onclick="show('fractions')" style="font-size:.85rem;padding:.7rem 2rem;">Next Lesson: Fractions →</button>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ INTRO -->
+<section class="section active" id="sec-intro">
+    <div class="sec-header">
+        <span class="sec-icon">𓅝</span>
+        <h2 class="sec-title">Thoth, God of Mathematics</h2>
+        <p class="sec-sub">The Scribe of the Gods Who Invented Numbers</p>
+    </div>
+
+    <div class="card">
+        <div class="god-row">
+            <div class="god-portrait">
+                <div class="portrait-box">
+                    <span class="god-icon">𓅝</span>
+                    <p class="god-name-txt">THOTH</p>
+                    <p class="god-role">Ibis-Headed God of<br>Wisdom & Mathematics</p>
+                </div>
+            </div>
+            <div>
+                <h3 class="card-title">Who Was Thoth?</h3>
+                <p>In ancient Egyptian mythology, <strong>Thoth</strong> was the god of wisdom, writing, magic, and — most importantly for us — <strong>mathematics</strong>. Depicted as a man with the head of an ibis bird, Thoth was believed to have invented numbers, measurement, and writing itself.</p>
+
+                <div class="myth-box">
+                    <span class="myth-label">✦ MYTH</span>
+                    <p>When Ra traveled through the underworld each night, Thoth stood at his side, recording every event in his sacred scrolls. His calculations maintained the balance of the cosmos — without mathematics, the universe itself would fall into chaos.</p>
+                </div>
+
+                <p>The ancient Egyptians were remarkable mathematicians. They built some of the most precise structures in the ancient world, managed vast agricultural economies along the Nile, and developed sophisticated number systems — thousands of years before modern mathematics was born.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3 class="card-title">The Sacred Scrolls: Real Egyptian Math Texts</h3>
+        <p>We know about Egyptian mathematics because of two incredible surviving documents:</p>
+        <div class="fact-grid" style="margin-top:1.2rem;">
+            <div class="fact-card">
+                <div class="fact-num">~1550 BCE</div>
+                <div class="fact-lbl"><strong>The Rhind Papyrus</strong><br>87 fully solved math problems by scribe Ahmes</div>
+            </div>
+            <div class="fact-card">
+                <div class="fact-num">~1850 BCE</div>
+                <div class="fact-lbl"><strong>The Moscow Papyrus</strong><br>25 problems including the earliest known pyramid volume formula</div>
+            </div>
+            <div class="fact-card">
+                <div class="fact-num">3,000+</div>
+                <div class="fact-lbl"><strong>Years Ago</strong><br>Egyptian mathematics was already highly advanced</div>
+            </div>
+        </div>
+        <p style="margin-top:1rem;">These papyrus scrolls contain real problems — on the pages that follow, you'll solve some of them yourself, exactly as Egyptian students did!</p>
+    </div>
+
+    <div class="card">
+        <h3 class="card-title">Your Five Sacred Lessons</h3>
+        <ul class="lesson-list">
+            <li onclick="show('numbers')"><span class="lnav-icon">𓏤</span><strong>Hieroglyphic Numbers — The Number System</strong><br><span style="color:var(--sand);font-size:.95rem;">Read and write numbers the way scribes did 5,000 years ago — plus an interactive converter</span></li>
+            <li onclick="show('fractions')"><span class="lnav-icon">𓂀</span><strong>The Eye of Horus — Fractions</strong><br><span style="color:var(--sand);font-size:.95rem;">How the battle of Horus and Set produced a fraction system used for 3,000 years</span></li>
+            <li onclick="show('geometry')"><span class="lnav-icon">△</span><strong>The Pyramids — Geometry</strong><br><span style="color:var(--sand);font-size:.95rem;">Calculate area, perimeter, and volume of Egypt's most iconic structures</span></li>
+            <li onclick="show('algebra')"><span class="lnav-icon">∞</span><strong>The Nile — Algebra</strong><br><span style="color:var(--sand);font-size:.95rem;">Solve for the unknown "aha" — just like Egyptian scribes 4,000 years ago</span></li>
+            <li onclick="show('patterns')"><span class="lnav-icon">✦</span><strong>The Stars — Patterns & Sequences</strong><br><span style="color:var(--sand);font-size:.95rem;">Discover the hidden patterns in numbers and Egyptian art</span></li>
+        </ul>
+        <div style="margin-top:1.5rem; text-align:center;">
+            <button class="cta" onclick="show('numbers')">Begin Lesson 1 →</button>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ FRACTIONS -->
+<section class="section" id="sec-fractions">
+    <div class="sec-header">
+        <span class="sec-icon">𓂀</span>
+        <h2 class="sec-title">The Eye of Horus</h2>
+        <p class="sec-sub">The Myth That Became a Fraction System</p>
+    </div>
+
+    <div class="card">
+        <div class="myth-box">
+            <span class="myth-label">✦ THE MYTH OF HORUS AND SET</span>
+            <p>Horus, son of Osiris, battled the evil god Set to avenge his father's murder. During their fierce duel, Set tore out Horus's left eye and shattered it into <strong>six pieces</strong>, scattering them across Egypt. The god Thoth — master of mathematics and magic — gathered all the pieces and reassembled them. But the pieces didn't quite add up... and that mathematical mystery became a fraction system used for thousands of years.</p>
+        </div>
+
+        <h3 class="card-title">The Six Pieces of the Eye</h3>
+        <p>Each piece represented a <strong>unit fraction</strong> — a fraction with 1 as the numerator. Together, they almost equal one whole eye:</p>
+
+        <!-- SVG Eye of Horus -->
+        <div class="eye-svg-wrap">
+            <svg viewBox="0 0 340 160" xmlns="http://www.w3.org/2000/svg" aria-label="Eye of Horus diagram">
+                <!-- eye outline -->
+                <path d="M20,80 Q80,20 170,80 Q80,140 20,80 Z" fill="none" stroke="#C9A227" stroke-width="2.5" opacity=".7"/>
+                <path d="M170,80 Q260,20 320,80 Q260,140 170,80 Z" fill="none" stroke="#C9A227" stroke-width="2.5" opacity=".7"/>
+                <!-- pupils -->
+                <circle cx="170" cy="80" r="22" fill="none" stroke="#FFD700" stroke-width="2.5"/>
+                <circle cx="170" cy="80" r="8" fill="#FFD700" opacity=".7"/>
+                <!-- eyebrow -->
+                <path d="M80,48 Q170,12 260,48" fill="none" stroke="#C9A227" stroke-width="2.2" stroke-dasharray="6,3"/>
+                <!-- teardrop left -->
+                <path d="M35,88 L15,128 Q25,135 38,120" fill="none" stroke="#C9A227" stroke-width="2"/>
+                <!-- right flourish -->
+                <path d="M305,80 Q330,95 315,115 Q300,130 285,115" fill="none" stroke="#C9A227" stroke-width="2"/>
+                <!-- curl below -->
+                <path d="M15,128 Q40,148 70,130 Q90,118 85,100" fill="none" stroke="#C9A227" stroke-width="2"/>
+                <!-- fraction labels -->
+                <text x="65"  y="95"  fill="#FFD700" font-size="13" font-family="serif" text-anchor="middle">1/2</text>
+                <text x="170" y="76"  fill="#FFD700" font-size="13" font-family="serif" text-anchor="middle">1/4</text>
+                <text x="170" y="30"  fill="#FFD700" font-size="13" font-family="serif" text-anchor="middle">1/8</text>
+                <text x="275" y="95"  fill="#FFD700" font-size="13" font-family="serif" text-anchor="middle">1/16</text>
+                <text x="52"  y="148" fill="#FFD700" font-size="13" font-family="serif" text-anchor="middle">1/32</text>
+                <text x="18"  y="118" fill="#FFD700" font-size="13" font-family="serif" text-anchor="middle">1/64</text>
+            </svg>
+        </div>
+
+        <div class="eye-grid">
+            <div class="eye-part"><span class="eye-sym">◑</span><div class="eye-frac">1/2</div><div class="eye-name">Right Side — sight</div></div>
+            <div class="eye-part"><span class="eye-sym">●</span><div class="eye-frac">1/4</div><div class="eye-name">Pupil — sight</div></div>
+            <div class="eye-part"><span class="eye-sym">◠</span><div class="eye-frac">1/8</div><div class="eye-name">Eyebrow — thought</div></div>
+            <div class="eye-part"><span class="eye-sym">◐</span><div class="eye-frac">1/16</div><div class="eye-name">Left Side — hearing</div></div>
+            <div class="eye-part"><span class="eye-sym">〜</span><div class="eye-frac">1/32</div><div class="eye-name">Curl Beneath — taste</div></div>
+            <div class="eye-part"><span class="eye-sym">▽</span><div class="eye-frac">1/64</div><div class="eye-name">Teardrop — smell</div></div>
+        </div>
+
+        <div class="math-box">
+            <span class="math-label">THE MATHEMATICAL MYSTERY</span>
+            <div class="formula">1/2 + 1/4 + 1/8 + 1/16 + 1/32 + 1/64 = <strong style="color:#FFD700">63/64</strong></div>
+            <p style="text-align:center;margin-top:.5rem;color:var(--sand);font-size:.95rem;">The six pieces only sum to <strong>63/64</strong> — not a whole!<br>Egyptians said Thoth magically supplied the missing <strong>1/64</strong>.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3 class="card-title">Egyptian Unit Fractions</h3>
+        <p>Egyptians wrote <em>every fraction</em> as a sum of <strong>different unit fractions</strong> (fractions with 1 on top, never repeated). This is called the <em>Egyptian fraction representation</em> — and computer scientists still study it today!</p>
+
+        <div class="math-box">
+            <span class="math-label">EXAMPLES</span>
+            <p style="font-size:1.1rem;line-height:2.2;color:var(--sand);">
+                <strong style="color:var(--bright-gold)">2/3</strong> &nbsp;=&nbsp; <em>1/2 + 1/6</em><br>
+                <strong style="color:var(--bright-gold)">3/4</strong> &nbsp;=&nbsp; <em>1/2 + 1/4</em><br>
+                <strong style="color:var(--bright-gold)">5/6</strong> &nbsp;=&nbsp; <em>1/2 + 1/3</em><br>
+                <strong style="color:var(--bright-gold)">7/8</strong> &nbsp;=&nbsp; <em>1/2 + 1/4 + 1/8</em>
+            </p>
+        </div>
+
+        <p>Notice: <strong>no fraction is repeated</strong>. Each unit fraction is unique. This made their arithmetic elegant — and it was used to measure grain and goods distributed to pyramid workers!</p>
+    </div>
+
+    <div class="card">
+        <p class="practice-head">☥ PRACTICE — Offerings to the Temple</p>
+
+        <div class="prob" id="fp1">
+            <p class="prob-text"><strong>Problem 1.</strong> The temple baker uses 1/2 a sack of grain for bread and 1/4 of a sack for cakes. How much grain has she used in total?</p>
+            <div class="opts">
+                <button class="opt" onclick="check(this,'fp1',false)">A) &nbsp;1/6</button>
+                <button class="opt" onclick="check(this,'fp1',true )">B) &nbsp;3/4</button>
+                <button class="opt" onclick="check(this,'fp1',false)">C) &nbsp;2/6</button>
+                <button class="opt" onclick="check(this,'fp1',false)">D) &nbsp;1/8</button>
+            </div>
+            <div class="prob-fb" id="fb-fp1"></div>
+        </div>
+
+        <div class="prob" id="fp2">
+            <p class="prob-text"><strong>Problem 2.</strong> Thoth's scroll is 1 cubit long. He writes on 1/2 + 1/8 of it. What fraction of the scroll is used?</p>
+            <div class="opts">
+                <button class="opt" onclick="check(this,'fp2',false)">A) &nbsp;2/10</button>
+                <button class="opt" onclick="check(this,'fp2',false)">B) &nbsp;1/4</button>
+                <button class="opt" onclick="check(this,'fp2',true )">C) &nbsp;5/8</button>
+                <button class="opt" onclick="check(this,'fp2',false)">D) &nbsp;3/8</button>
+            </div>
+            <div class="prob-fb" id="fb-fp2"></div>
+        </div>
+
+        <div class="prob" id="fp3">
+            <p class="prob-text"><strong>Problem 3.</strong> A worker receives 3/4 of a loaf of bread. Write 3/4 as Egyptian unit fractions (different fractions, each with numerator 1):</p>
+            <div class="opts">
+                <button class="opt" onclick="check(this,'fp3',false)">A) &nbsp;1/4 + 1/4 + 1/4</button>
+                <button class="opt" onclick="check(this,'fp3',true )">B) &nbsp;1/2 + 1/4</button>
+                <button class="opt" onclick="check(this,'fp3',false)">C) &nbsp;1/3 + 1/3 + 1/12</button>
+                <button class="opt" onclick="check(this,'fp3',false)">D) &nbsp;1/2 + 1/6</button>
+            </div>
+            <div class="prob-fb" id="fb-fp3"></div>
+        </div>
+
+        <div style="margin-top:1.5rem;text-align:right;">
+            <button class="cta" onclick="show('geometry')" style="font-size:.85rem;padding:.7rem 2rem;">Next Lesson: Geometry →</button>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ GEOMETRY -->
+<section class="section" id="sec-geometry">
+    <div class="sec-header">
+        <span class="sec-icon">△</span>
+        <h2 class="sec-title">The Pyramids of Geometry</h2>
+        <p class="sec-sub">Ra's Sacred Triangles and the Mathematics of the Cosmos</p>
+    </div>
+
+    <div class="card">
+        <div class="myth-box">
+            <span class="myth-label">✦ THE SUN GOD RA AND THE PYRAMID</span>
+            <p>Ra, the great sun god, sailed his golden boat across the sky each day. The pyramid shape represented his rays of sunlight descending to Earth — a stairway between the mortal world and the divine realm. Building a geometrically perfect pyramid required mathematical precision that still amazes engineers today.</p>
+        </div>
+
+        <h3 class="card-title">The Great Pyramid: Real Numbers</h3>
+        <div class="fact-grid">
+            <div class="fact-card">
+                <div class="fact-num">230.4 m</div>
+                <div class="fact-lbl">Length of each side of the square base</div>
+            </div>
+            <div class="fact-card">
+                <div class="fact-num">146.5 m</div>
+                <div class="fact-lbl">Original height (now 138.5 m)</div>
+            </div>
+            <div class="fact-card">
+                <div class="fact-num">2.3 M</div>
+                <div class="fact-lbl">Stone blocks used to build it</div>
+            </div>
+            <div class="fact-card">
+                <div class="fact-num">20 years</div>
+                <div class="fact-lbl">Estimated time to build (~2560 BCE)</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3 class="card-title">Key Formulas</h3>
+
+        <div class="math-box">
+            <span class="math-label">BASE AREA (square base)</span>
+            <div class="formula">Area = side × side = s²</div>
+        </div>
+
+        <div class="math-box">
+            <span class="math-label">VOLUME OF A PYRAMID</span>
+            <div class="formula">V = ⅓ × base area × height</div>
+            <p style="text-align:center;color:var(--sand);font-size:.9rem;margin-top:.5rem;">
+                This exact formula appears in the Moscow Papyrus (~1850 BCE) — the oldest known pyramid volume calculation!
+            </p>
+        </div>
+
+        <div class="math-box">
+            <span class="math-label">THE 3-4-5 RIGHT TRIANGLE (Pythagorean Triple)</span>
+            <div class="formula">3² + 4² = 9 + 16 = 25 = 5²</div>
+            <p style="text-align:center;color:var(--sand);font-size:.9rem;margin-top:.5rem;">
+                Egyptian builders used ropes knotted at 12 equal intervals. Stretched into a 3-4-5 triangle, this made a <em>perfect right angle</em>. Workers who did this were called <em>harpedonaptae</em> — "rope stretchers."
+            </p>
+        </div>
+
+        <div class="math-box">
+            <span class="math-label">AREA OF A TRIANGLE</span>
+            <div class="formula">A = ½ × base × height</div>
+        </div>
+
+        <h3 class="card-title" style="margin-top:1.5rem;">The Seked: Egyptian Slope</h3>
+        <p>Egyptians measured pyramid slope using the <strong>seked</strong> — how many <em>palms</em> horizontally per 1 <em>cubit</em> (7 palms) of vertical rise. This is essentially the concept of slope (rise over run) that you'll use throughout algebra and calculus!</p>
+    </div>
+
+    <div class="card">
+        <h3 class="card-title">△ Interactive Pyramid Builder</h3>
+        <p>Drag the sliders to change the pyramid's dimensions. Every formula updates live so you can see <em>exactly</em> how the numbers connect to the shape.</p>
+
+        <div class="pyr-builder-grid" style="margin-top:1.4rem;">
+            <!-- Canvas -->
+            <div>
+                <canvas id="pyrCanvas" width="380" height="270"></canvas>
+            </div>
+
+            <!-- Controls + stats -->
+            <div>
+                <div class="slider-row">
+                    <span class="slider-lbl">Base (m)</span>
+                    <input class="pyr-slider" type="range" id="pyrBase" min="2" max="100" value="20" oninput="updatePyramid()">
+                    <span class="slider-val" id="pyrBaseVal">20</span>
+                </div>
+                <div class="slider-row">
+                    <span class="slider-lbl">Height (m)</span>
+                    <input class="pyr-slider" type="range" id="pyrHeight" min="1" max="100" value="15" oninput="updatePyramid()">
+                    <span class="slider-val" id="pyrHeightVal">15</span>
+                </div>
+
+                <div class="pyr-stats-grid">
+                    <div class="pyr-stat">
+                        <div class="pyr-stat-lbl">BASE AREA</div>
+                        <div class="pyr-stat-val" id="psArea">400 m²</div>
+                        <div class="pyr-stat-eq" id="psAreaEq">20 × 20</div>
+                    </div>
+                    <div class="pyr-stat">
+                        <div class="pyr-stat-lbl">VOLUME</div>
+                        <div class="pyr-stat-val" id="psVol">2,000 m³</div>
+                        <div class="pyr-stat-eq" id="psVolEq">⅓ × 400 × 15</div>
+                    </div>
+                    <div class="pyr-stat">
+                        <div class="pyr-stat-lbl">SLANT HEIGHT</div>
+                        <div class="pyr-stat-val" id="psSlant">18.0 m</div>
+                        <div class="pyr-stat-eq" id="psSlantEq">√(15² + 10²)</div>
+                    </div>
+                    <div class="pyr-stat">
+                        <div class="pyr-stat-lbl">SEKED (slope)</div>
+                        <div class="pyr-stat-val" id="psSeked">0.67</div>
+                        <div class="pyr-stat-eq" id="psSekedEq">(20/2) ÷ 15</div>
+                    </div>
+                </div>
+
+                <p style="margin-top:.9rem;font-size:.85rem;color:var(--sand);font-style:italic;">
+                    Try setting base=230, height=146 to match the Great Pyramid of Giza!
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <p class="practice-head">△ PRACTICE — Building the Sacred Structures</p>
+
+        <div class="prob" id="gp1">
+            <p class="prob-text"><strong>Problem 1.</strong> Pharaoh orders a pyramid with a square base of 12 m on each side and a height of 9 m. What is the <em>volume</em>? Use V = ⅓ × s² × h.</p>
+            <div class="opts">
+                <button class="opt" onclick="check(this,'gp1',false)">A) &nbsp;648 m³</button>
+                <button class="opt" onclick="check(this,'gp1',true )">B) &nbsp;432 m³</button>
+                <button class="opt" onclick="check(this,'gp1',false)">C) &nbsp;1,296 m³</button>
+                <button class="opt" onclick="check(this,'gp1',false)">D) &nbsp;144 m³</button>
+            </div>
+            <div class="prob-fb" id="fb-gp1"></div>
+        </div>
+
+        <div class="prob" id="gp2">
+            <p class="prob-text"><strong>Problem 2.</strong> An Egyptian rope-stretcher forms a 3-4-5 right triangle. The two legs are 3 cubits and 4 cubits. Using the Pythagorean theorem (a² + b² = c²), what is the length of the hypotenuse?</p>
+            <div class="opts">
+                <button class="opt" onclick="check(this,'gp2',false)">A) &nbsp;7 cubits</button>
+                <button class="opt" onclick="check(this,'gp2',false)">B) &nbsp;4.5 cubits</button>
+                <button class="opt" onclick="check(this,'gp2',true )">C) &nbsp;5 cubits</button>
+                <button class="opt" onclick="check(this,'gp2',false)">D) &nbsp;6 cubits</button>
+            </div>
+            <div class="prob-fb" id="fb-gp2"></div>
+        </div>
+
+        <div class="prob" id="gp3">
+            <p class="prob-text"><strong>Problem 3.</strong> A decorative wall panel is triangular, with base 14 m and height 10 m. What is its area? (A = ½ × base × height)</p>
+            <div class="opts">
+                <button class="opt" onclick="check(this,'gp3',false)">A) &nbsp;140 m²</button>
+                <button class="opt" onclick="check(this,'gp3',true )">B) &nbsp;70 m²</button>
+                <button class="opt" onclick="check(this,'gp3',false)">C) &nbsp;35 m²</button>
+                <button class="opt" onclick="check(this,'gp3',false)">D) &nbsp;28 m²</button>
+            </div>
+            <div class="prob-fb" id="fb-gp3"></div>
+        </div>
+
+        <div style="margin-top:1.5rem;text-align:right;">
+            <button class="cta" onclick="show('algebra')" style="font-size:.85rem;padding:.7rem 2rem;">Next Lesson: Algebra →</button>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ ALGEBRA -->
+<section class="section" id="sec-algebra">
+    <div class="sec-header">
+        <span class="sec-icon">∞</span>
+        <h2 class="sec-title">The Nile's Unknown</h2>
+        <p class="sec-sub">The Birth of Algebra in the Land of the Pharaohs</p>
+    </div>
+
+    <div class="card">
+        <div class="myth-box">
+            <span class="myth-label">✦ ISIS AND THE MYSTERY OF THE UNKNOWN</span>
+            <p>Isis, goddess of magic and wisdom, was famous for solving impossible problems. After Set murdered Osiris and scattered his remains across Egypt, Isis tracked down every piece through clever reasoning and deduction. Egyptians saw algebra the same way: a hidden mystery waiting to be solved by clear thinking — finding the unknown from clues.</p>
+        </div>
+
+        <h3 class="card-title">The Egyptian "Aha" — Solving for X</h3>
+        <p>Thousands of years before the word "algebra" existed, Egyptian scribes solved equations. They called the unknown quantity <strong>"aha"</strong> — meaning <em>heap</em>, like a pile of grain whose amount you must determine.</p>
+
+        <div class="math-box">
+            <span class="math-label">REAL PROBLEM FROM THE RHIND PAPYRUS (~1550 BCE)</span>
+            <p style="font-style:italic;color:var(--sand);font-size:1.05rem;margin-bottom:1rem;">"A quantity (aha) whose fourth part is added to it becomes 15. What is the quantity?"</p>
+            <div class="formula">aha + aha ÷ 4 = 15</div>
+            <div class="formula">5/4 × aha = 15</div>
+            <div class="formula">aha = 15 × 4/5 = <strong style="color:#FFD700">12</strong> ✓</div>
+            <p style="text-align:center;color:var(--sand);font-size:.9rem;margin-top:.5rem;">Today we write: x + x/4 = 15, so x = 12</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3 class="card-title">How to Solve Linear Equations</h3>
+        <ol style="line-height:2.3;margin:.8rem 0 .8rem 1.5rem;">
+            <li>Identify the unknown — call it <strong>x</strong> (the "aha")</li>
+            <li>Write the situation as an equation</li>
+            <li>Perform the <em>same operation</em> on both sides to isolate x</li>
+            <li>Check your answer by substituting back into the original equation</li>
+        </ol>
+
+        <div class="math-box">
+            <span class="math-label">EXAMPLE: THE GRAIN STOREROOM</span>
+            <p style="color:var(--sand);font-style:italic;font-size:1.05rem;">"A farmer stores grain. After 7 sacks are sent to the temple, 13 sacks remain. How many sacks did she start with?"</p>
+            <br>
+            <p style="color:var(--sand);font-size:1.05rem;">
+                Write it: &nbsp;<strong style="color:var(--bright-gold)">x − 7 = 13</strong><br>
+                Add 7 to both sides: &nbsp;<strong style="color:var(--bright-gold)">x = 20</strong><br>
+                Check: 20 − 7 = 13 ✓
+            </p>
+        </div>
+
+        <div class="math-box">
+            <span class="math-label">EXAMPLE: THE PRIESTS' SHARE</span>
+            <p style="color:var(--sand);font-style:italic;font-size:1.05rem;">"Three times a number, plus 4, equals 22. Find the number."</p>
+            <br>
+            <p style="color:var(--sand);font-size:1.05rem;">
+                Write it: &nbsp;<strong style="color:var(--bright-gold)">3x + 4 = 22</strong><br>
+                Subtract 4: &nbsp;3x = 18<br>
+                Divide by 3: &nbsp;<strong style="color:var(--bright-gold)">x = 6</strong><br>
+                Check: 3(6) + 4 = 22 ✓
+            </p>
+        </div>
+    </div>
+
+    <div class="card">
+        <p class="practice-head">∞ PRACTICE — Solve the Sacred Mysteries</p>
+
+        <div class="prob" id="ap1">
+            <p class="prob-text"><strong>Problem 1.</strong> The high priest divides an offering equally among 4 temples. Each temple receives 15 units of grain. How many units did the priest start with? (Solve: x ÷ 4 = 15)</p>
+            <div class="opts">
+                <button class="opt" onclick="check(this,'ap1',false)">A) &nbsp;45</button>
+                <button class="opt" onclick="check(this,'ap1',false)">B) &nbsp;19</button>
+                <button class="opt" onclick="check(this,'ap1',true )">C) &nbsp;60</button>
+                <button class="opt" onclick="check(this,'ap1',false)">D) &nbsp;11</button>
+            </div>
+            <div class="prob-fb" id="fb-ap1"></div>
+        </div>
+
+        <div class="prob" id="ap2">
+            <p class="prob-text"><strong>Problem 2 (from the Rhind Papyrus).</strong> "A quantity and its half equals 9. What is the quantity?" (Solve: x + x/2 = 9)</p>
+            <div class="opts">
+                <button class="opt" onclick="check(this,'ap2',false)">A) &nbsp;4.5</button>
+                <button class="opt" onclick="check(this,'ap2',true )">B) &nbsp;6</button>
+                <button class="opt" onclick="check(this,'ap2',false)">C) &nbsp;3</button>
+                <button class="opt" onclick="check(this,'ap2',false)">D) &nbsp;18</button>
+            </div>
+            <div class="prob-fb" id="fb-ap2"></div>
+        </div>
+
+        <div class="prob" id="ap3">
+            <p class="prob-text"><strong>Problem 3.</strong> Thoth has some scrolls. Three times that number, plus 4 extra scrolls, equals 25. How many scrolls does Thoth have? (Solve: 3x + 4 = 25)</p>
+            <div class="opts">
+                <button class="opt" onclick="check(this,'ap3',false)">A) &nbsp;9</button>
+                <button class="opt" onclick="check(this,'ap3',false)">B) &nbsp;10</button>
+                <button class="opt" onclick="check(this,'ap3',true )">C) &nbsp;7</button>
+                <button class="opt" onclick="check(this,'ap3',false)">D) &nbsp;8</button>
+            </div>
+            <div class="prob-fb" id="fb-ap3"></div>
+        </div>
+
+        <div style="margin-top:1.5rem;text-align:right;">
+            <button class="cta" onclick="show('patterns')" style="font-size:.85rem;padding:.7rem 2rem;">Next Lesson: Patterns →</button>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ PATTERNS -->
+<section class="section" id="sec-patterns">
+    <div class="sec-header">
+        <span class="sec-icon">✦</span>
+        <h2 class="sec-title">Patterns of the Stars</h2>
+        <p class="sec-sub">The Hidden Mathematics in Egyptian Art and the Night Sky</p>
+    </div>
+
+    <div class="card">
+        <div class="myth-box">
+            <span class="myth-label">✦ NUT, GODDESS OF THE STARS</span>
+            <p>Nut was the sky goddess, her body arched over the earth and covered in stars. Each night she swallowed the sun (Ra) and each morning gave birth to him anew. Egyptian astronomers mapped her star-body with remarkable precision — and in doing so, discovered the mathematical patterns hidden in the heavens.</p>
+        </div>
+
+        <h3 class="card-title">Egyptian Doubling: Ancient Multiplication</h3>
+        <p>Egyptians had a brilliant method for multiplying using only <strong>doubling and addition</strong>. This is actually the same system modern computers use internally — binary multiplication!</p>
+
+        <div class="math-box">
+            <span class="math-label">EXAMPLE: 13 × 7 USING EGYPTIAN DOUBLING</span>
+            <p style="font-size:1.05rem;line-height:2.3;color:var(--sand);">
+                Start with 7 and keep doubling:<br>
+                &nbsp; <em>1 → 7</em><br>
+                &nbsp; <em>2 → 14</em><br>
+                &nbsp; <em>4 → 28</em><br>
+                &nbsp; <em>8 → 56</em><br><br>
+                Since <strong style="color:var(--bright-gold)">13 = 8 + 4 + 1</strong>, add those rows:<br>
+                <strong style="color:var(--bright-gold)">56 + 28 + 7 = 91</strong><br><br>
+                Check: 13 × 7 = 91 ✓
+            </p>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3 class="card-title">Arithmetic Sequences: The Pharaoh's Staircase</h3>
+        <p>An <strong>arithmetic sequence</strong> adds the same number each time (called the <em>common difference</em>).</p>
+
+        <div class="math-box">
+            <span class="math-label">ARITHMETIC SEQUENCE (common difference = 3)</span>
+            <div class="formula">2, &nbsp;5, &nbsp;8, &nbsp;11, &nbsp;14, &nbsp;17, &nbsp;...</div>
+        </div>
+
+        <p style="margin-top:.8rem;">The Rhind Papyrus contains this real problem: <em>"Divide 10 heqats of barley among 10 men so that the common difference between each share is 1/8."</em> That is arithmetic sequences combined with fractions!</p>
+
+        <h3 class="card-title" style="margin-top:1.5rem;">Geometric Sequences: The Power of Doubling</h3>
+        <p>A <strong>geometric sequence</strong> multiplies by the same number each time (called the <em>common ratio</em>).</p>
+
+        <div class="math-box">
+            <span class="math-label">GEOMETRIC SEQUENCE (common ratio = 2)</span>
+            <div class="formula">1, &nbsp;2, &nbsp;4, &nbsp;8, &nbsp;16, &nbsp;32, &nbsp;64, &nbsp;...</div>
+        </div>
+
+        <div class="myth-box" style="margin-top:1.3rem;">
+            <span class="myth-label">✦ PROBLEM 79 OF THE RHIND PAPYRUS</span>
+            <p>An estate has 7 houses, each with 7 cats, each cat caught 7 mice, each mouse had eaten 7 heads of wheat, each head would have grown 7 heqats of grain. Add them all together! This geometric sequence with ratio 7 appears centuries later in the riddle "As I was going to St. Ives…" — proof that math travels through time.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <p class="practice-head">✦ PRACTICE — Patterns of the Cosmos</p>
+
+        <div class="prob" id="pp1">
+            <p class="prob-text"><strong>Problem 1.</strong> Complete the arithmetic sequence carved on the pyramid's stone tiers: 3, 7, 11, 15, <strong>___</strong></p>
+            <div class="opts">
+                <button class="opt" onclick="check(this,'pp1',false)">A) &nbsp;17</button>
+                <button class="opt" onclick="check(this,'pp1',true )">B) &nbsp;19</button>
+                <button class="opt" onclick="check(this,'pp1',false)">C) &nbsp;18</button>
+                <button class="opt" onclick="check(this,'pp1',false)">D) &nbsp;20</button>
+            </div>
+            <div class="prob-fb" id="fb-pp1"></div>
+        </div>
+
+        <div class="prob" id="pp2">
+            <p class="prob-text"><strong>Problem 2.</strong> Use Egyptian doubling to find 5 × 9. Start with 9 and double: <em>1→9, 2→18, 4→36</em>. Since 5 = 4 + 1, add the row-4 value (36) and the row-1 value (9). What is the result?</p>
+            <div class="opts">
+                <button class="opt" onclick="check(this,'pp2',false)">A) &nbsp;36</button>
+                <button class="opt" onclick="check(this,'pp2',false)">B) &nbsp;54</button>
+                <button class="opt" onclick="check(this,'pp2',true )">C) &nbsp;45</button>
+                <button class="opt" onclick="check(this,'pp2',false)">D) &nbsp;48</button>
+            </div>
+            <div class="prob-fb" id="fb-pp2"></div>
+        </div>
+
+        <div class="prob" id="pp3">
+            <p class="prob-text"><strong>Problem 3 (Rhind Papyrus inspired).</strong> There are 7 temples. Each temple has 7 priests. Each priest has 7 cats. How many cats are there in total?</p>
+            <div class="opts">
+                <button class="opt" onclick="check(this,'pp3',false)">A) &nbsp;21</button>
+                <button class="opt" onclick="check(this,'pp3',true )">B) &nbsp;343</button>
+                <button class="opt" onclick="check(this,'pp3',false)">C) &nbsp;49</button>
+                <button class="opt" onclick="check(this,'pp3',false)">D) &nbsp;77</button>
+            </div>
+            <div class="prob-fb" id="fb-pp3"></div>
+        </div>
+
+        <div style="margin-top:1.5rem;text-align:right;">
+            <button class="cta" onclick="show('quiz')" style="font-size:.85rem;padding:.7rem 2rem;">Take the Grand Quiz →</button>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ QUIZ -->
+<section class="section" id="sec-quiz">
+    <div class="sec-header">
+        <span class="sec-icon">⊕</span>
+        <h2 class="sec-title">The Grand Trial of Thoth</h2>
+        <p class="sec-sub">Prove Your Wisdom — 12 Questions Across All Four Sacred Halls</p>
+    </div>
+
+    <div class="quiz-wrap">
+        <div class="q-progress" id="qprogress"></div>
+
+        <div class="q-box" id="qbox">
+            <p class="q-num"  id="qnum">QUESTION 1 OF 12</p>
+            <span class="q-cat" id="qcat">FRACTIONS</span>
+            <p class="q-text" id="qtext">Loading…</p>
+            <div class="q-opts" id="qopts"></div>
+            <div class="q-fb"  id="qfb"></div>
+            <button class="q-next" id="qnext" onclick="nextQ()">NEXT QUESTION →</button>
+        </div>
+
+        <div class="results card" id="qresults">
+            <h3 class="res-title">The Judgment of Thoth</h3>
+            <div class="score-big" id="qscore">0/12</div>
+            <div class="rank-badge" id="qrank">—</div>
+            <p class="rank-desc" id="qdesc"></p>
+            <button class="restart-btn" onclick="initQuiz()">☥ &nbsp; RETAKE THE TRIAL &nbsp; ☥</button>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ FOOTER -->
+<footer class="footer">
+    <div class="footer-ankh">☥ ☥ ☥</div>
+    <p>Temple of Numbers — Mathematics Through Egyptian Mythology</p>
+    <p style="margin-top:.4rem;font-size:.8rem;">Mathematical content inspired by the Rhind Papyrus and Moscow Papyrus · For ages 12 and up</p>
+    <div class="footer-ankh">𓂀</div>
+</footer>
+
+<script>
+/* ============================================================ STARS */
+const canvas = document.getElementById('starCanvas');
+const ctx    = canvas.getContext('2d');
+
+function resize() {
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+const stars = Array.from({length:220},()=>({
+    x: Math.random(),
+    y: Math.random() * .75,
+    r: Math.random() * 1.8 + .4,
+    b: Math.random(),
+    ph: Math.random() * Math.PI * 2
+}));
+
+let t = 0;
+(function tick() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    t += .012;
+    stars.forEach(s => {
+        const alpha = .25 + .75 * (.5 + .5 * Math.sin(t*1.8 + s.ph)) * s.b;
+        const cx = s.x * canvas.width, cy = s.y * canvas.height;
+        const g  = ctx.createRadialGradient(cx,cy,0,cx,cy,s.r*2.5);
+        g.addColorStop(0, `rgba(255,255,200,${alpha})`);
+        g.addColorStop(1, 'rgba(255,255,200,0)');
+        ctx.beginPath();
+        ctx.arc(cx,cy,s.r*2,0,Math.PI*2);
+        ctx.fillStyle = g;
+        ctx.fill();
+    });
+    requestAnimationFrame(tick);
+})();
+
+/* ============================================================ NAV */
+function enterTemple() {
+    document.getElementById('mainNav').scrollIntoView({behavior:'smooth'});
+}
+
+function show(name) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('sec-'+name).classList.add('active');
+    document.querySelector(`[data-sec="${name}"]`).classList.add('active');
+    document.getElementById('mainNav').scrollIntoView({behavior:'smooth'});
+}
+
+/* ============================================================ PRACTICE */
+const praise = [
+    "By the wisdom of Thoth, you are correct! The scales of Ma'at balance in your favor.",
+    "Ra's light shines upon your answer — it is perfect!",
+    "Excellent! The scribes of Egypt nod with approval.",
+    "Correct! Your ka grows stronger with every right answer.",
+    "The Eye of Horus sees the truth — and so do you!"
+];
+const retry = [
+    "Not quite. Study the sacred scrolls again — you will find the path.",
+    "Ra's light has not yet illuminated this. Review the lesson and try once more.",
+    "Even Thoth needed practice to master the arts. Keep studying!",
+    "The Nile does not flow backward, nor does this answer reach the truth. Think again.",
+    "The pyramid stands firm — let your thinking stand just as firm. Try again!"
+];
+const rnd = arr => arr[Math.floor(Math.random()*arr.length)];
+
+function check(btn, probId, isCorrect) {
+    const prob = document.getElementById(probId);
+    const fb   = document.getElementById('fb-'+probId);
+    const btns = prob.querySelectorAll('.opt');
+
+    btns.forEach(b => { b.disabled = true; });
+    answeredProbs.add(probId);
+
+    if (isCorrect) {
+        btn.classList.add('correct');
+        fb.textContent = '✓  ' + rnd(praise);
+        fb.className = 'prob-fb show-ok';
+    } else {
+        btn.classList.add('wrong');
+        fb.textContent = '✗  ' + rnd(retry);
+        fb.className = 'prob-fb show-no';
+        btns.forEach(b => {
+            if (b.getAttribute('onclick') && b.getAttribute('onclick').includes(',true)')) {
+                b.classList.add('reveal');
+            }
+        });
+        if (SOLUTIONS[probId] && !document.getElementById('sol-wrap-'+probId)) {
+            const wrap = document.createElement('div');
+            wrap.id = 'sol-wrap-' + probId;
+            const stepsHtml = SOLUTIONS[probId].steps
+                .map((s,i) => `<div class="sol-step"><span class="sol-num">${i+1}.</span><span>${s}</span></div>`)
+                .join('');
+            wrap.innerHTML =
+                `<button class="show-how-btn" id="showbtn-${probId}" onclick="showSolution('${probId}')">☥ Show me how →</button>` +
+                `<div class="solution-panel" id="sol-${probId}">` +
+                    `<div class="sol-title">STEP-BY-STEP SOLUTION</div>${stepsHtml}` +
+                `</div>`;
+            fb.after(wrap);
+        }
+    }
+
+    for (const [sec, probs] of Object.entries(SECTION_PROBS)) {
+        if (probs.includes(probId)) { checkSectionComplete(sec); break; }
+    }
+}
+
+function showSolution(probId) {
+    document.getElementById('sol-'     + probId).classList.add('open');
+    document.getElementById('showbtn-' + probId).style.display = 'none';
+}
+
+/* ============================================================ QUIZ DATA */
+const QQ = [
+    { cat:'FRACTIONS',
+      q:'The Eye of Horus was split into six unit fractions. Which piece represents <strong>1/4</strong>?',
+      opts:['The eyebrow (thought)','The pupil (sight)','The teardrop (smell)','The curl beneath (taste)'],
+      ans:1,
+      exp:'The pupil of the Eye of Horus = 1/4. Together all six pieces sum to 63/64.' },
+    { cat:'FRACTIONS',
+      q:'What is <strong>1/2 + 1/8</strong>?',
+      opts:['2/10','1/4','3/8','5/8'],
+      ans:3,
+      exp:'1/2 = 4/8, so 4/8 + 1/8 = 5/8. Egyptians would write this as two separate unit fractions.' },
+    { cat:'FRACTIONS',
+      q:'How would an Egyptian scribe express <strong>3/4</strong> using unit fractions? (Each fraction must have numerator 1 and no fraction may repeat.)',
+      opts:['1/4 + 1/4 + 1/4','1/3 + 1/3 + 1/12','1/2 + 1/4','1/2 + 1/6'],
+      ans:2,
+      exp:'3/4 = 1/2 + 1/4. Check: 2/4 + 1/4 = 3/4 ✓. Answer A repeats 1/4, which Egyptians did not allow.' },
+    { cat:'GEOMETRY',
+      q:'Pharaoh builds a pyramid: square base <strong>6 m</strong> on each side, height <strong>9 m</strong>. What is the volume? (V = ⅓ × s² × h)',
+      opts:['162 m³','108 m³','54 m³','324 m³'],
+      ans:1,
+      exp:'V = ⅓ × 6² × 9 = ⅓ × 36 × 9 = ⅓ × 324 = 108 m³.' },
+    { cat:'GEOMETRY',
+      q:'Egyptian rope-stretchers formed a 3-4-5 triangle to create right angles. What is <strong>3² + 4²</strong>?',
+      opts:['49','12','25','20'],
+      ans:2,
+      exp:'3² + 4² = 9 + 16 = 25 = 5². This is the Pythagorean theorem — the 3-4-5 triangle always makes a perfect right angle.' },
+    { cat:'GEOMETRY',
+      q:'A triangular temple carving has base <strong>14 m</strong> and height <strong>10 m</strong>. What is its area? (A = ½ × base × height)',
+      opts:['140 m²','70 m²','35 m²','28 m²'],
+      ans:1,
+      exp:'A = ½ × 14 × 10 = ½ × 140 = 70 m².' },
+    { cat:'ALGEBRA',
+      q:'From the Rhind Papyrus: <em>"A quantity and its quarter equals 20."</em> Solve: <strong>x + x/4 = 20</strong>',
+      opts:['x = 5','x = 15','x = 16','x = 24'],
+      ans:2,
+      exp:'5x/4 = 20 → x = 20 × 4/5 = 16. Check: 16 + 16/4 = 16 + 4 = 20 ✓' },
+    { cat:'ALGEBRA',
+      q:'The number of cats in a temple is 3 times the number of dogs. There are 18 cats. How many dogs? Solve: <strong>3x = 18</strong>',
+      opts:['3 dogs','54 dogs','21 dogs','6 dogs'],
+      ans:3,
+      exp:'3x = 18 → x = 18 ÷ 3 = 6 dogs. Check: 3 × 6 = 18 ✓' },
+    { cat:'ALGEBRA',
+      q:'Thoth has some scrolls. After Isis gives him 5 more, he has 17. How many did he start with? Solve: <strong>x + 5 = 17</strong>',
+      opts:['22','85','12','7'],
+      ans:2,
+      exp:'x = 17 − 5 = 12 scrolls. Check: 12 + 5 = 17 ✓' },
+    { cat:'PATTERNS',
+      q:'Complete the arithmetic sequence painted on the pyramid stones: <strong>4, 9, 14, 19, ___</strong>',
+      opts:['22','24','21','25'],
+      ans:1,
+      exp:'The common difference is 5. So 19 + 5 = 24.' },
+    { cat:'PATTERNS',
+      q:'Use Egyptian doubling to find <strong>6 × 8</strong>. Doubling 8: (1→8, 2→16, 4→32). Since 6 = 4 + 2, which values do you add?',
+      opts:['8 + 16 = 24','16 + 32 = 48','8 + 32 = 40','32 + 8 = 40'],
+      ans:1,
+      exp:'6 = 4 + 2, so add the row-4 value (32) and row-2 value (16): 32 + 16 = 48. Check: 6 × 8 = 48 ✓' },
+    { cat:'PATTERNS',
+      q:'In the geometric sequence <strong>2, 6, 18, 54, ___</strong> — what is the next term, and what is the common ratio?',
+      opts:['108, ratio = 2','162, ratio = 3','108, ratio = 3','72,  ratio = 4'],
+      ans:1,
+      exp:'Each term is multiplied by 3 (common ratio = 3). So 54 × 3 = 162.' }
+];
+
+/* ============================================================ QUIZ LOGIC */
+let qIdx = 0, qScore = 0, qAnswered = [];
+
+function initQuiz() {
+    qIdx = 0; qScore = 0;
+    qAnswered = new Array(QQ.length).fill(null);
+
+    const bar = document.getElementById('qprogress');
+    bar.innerHTML = '';
+    QQ.forEach((_,i) => {
+        const d = document.createElement('div');
+        d.className = 'qdot' + (i===0?' current':'');
+        d.id = 'dot'+i;
+        bar.appendChild(d);
+    });
+
+    document.getElementById('qbox').style.display    = 'block';
+    document.getElementById('qresults').classList.remove('show');
+    renderQ(0);
+}
+
+function renderQ(i) {
+    const q = QQ[i];
+    document.getElementById('qnum').textContent = `QUESTION ${i+1} OF ${QQ.length}`;
+    document.getElementById('qcat').textContent = q.cat;
+    document.getElementById('qtext').innerHTML  = q.q;
+    document.getElementById('qfb').className    = 'q-fb';
+    document.getElementById('qnext').classList.remove('show');
+
+    const wrap = document.getElementById('qopts');
+    wrap.innerHTML = '';
+    const ltrs = ['A','B','C','D'];
+    q.opts.forEach((opt,j) => {
+        const btn = document.createElement('button');
+        btn.className = 'q-opt';
+        btn.innerHTML = `<span class="opt-ltr">${ltrs[j]}</span>${opt}`;
+        btn.onclick   = () => selectQ(j, btn);
+        wrap.appendChild(btn);
+    });
+}
+
+function selectQ(sel, btn) {
+    const q    = QQ[qIdx];
+    const opts = document.querySelectorAll('.q-opt');
+    opts.forEach(b => b.disabled = true);
+
+    const ok   = sel === q.ans;
+    const fb   = document.getElementById('qfb');
+
+    if (ok) {
+        btn.classList.add('sel-ok');
+        qScore++;
+        qAnswered[qIdx] = true;
+        fb.innerHTML   = '✓ &nbsp;Correct! &nbsp;' + q.exp;
+        fb.className   = 'q-fb fb-ok';
+    } else {
+        btn.classList.add('sel-no');
+        opts[q.ans].classList.add('reveal-ok');
+        qAnswered[qIdx] = false;
+        fb.innerHTML   = '✗ &nbsp;Not quite. &nbsp;' + q.exp;
+        fb.className   = 'q-fb fb-no';
+    }
+
+    const dot = document.getElementById('dot'+qIdx);
+    dot.classList.remove('current');
+    dot.classList.add(ok ? 'q-ok' : 'q-no');
+
+    const nxt = document.getElementById('qnext');
+    nxt.textContent = qIdx < QQ.length-1 ? 'NEXT QUESTION →' : 'SEE MY RESULTS →';
+    nxt.classList.add('show');
+}
+
+function nextQ() {
+    qIdx++;
+    if (qIdx >= QQ.length) { showResults(); return; }
+    document.getElementById('dot'+qIdx).classList.add('current');
+    renderQ(qIdx);
+}
+
+function showResults() {
+    document.getElementById('qbox').style.display = 'none';
+    const res = document.getElementById('qresults');
+    res.classList.add('show');
+    document.getElementById('qscore').textContent = qScore + '/12';
+
+    let rank, desc;
+    if (qScore <= 3) {
+        rank = 'Apprentice Scribe';
+        desc = 'Your journey through the Temple of Numbers is just beginning. The scribes of Egypt studied for years — keep practicing, and the wisdom of Thoth will grow within you.';
+    } else if (qScore <= 6) {
+        rank = 'Temple Scholar';
+        desc = 'You have proven yourself worthy of entering the inner sanctum! You understand the foundations of Egyptian mathematics. Continue your studies to unlock the deepest mysteries.';
+    } else if (qScore <= 9) {
+        rank = 'High Priest of Numbers';
+        desc = 'Formidable mathematical wisdom! The gods of Egypt nod with approval. You are well on your way to mastering the sacred arts of number, geometry, and algebra.';
+    } else {
+        rank = 'Wisdom of Thoth Incarnate';
+        desc = 'The gods themselves bow before your mathematical mastery! You have proven that the ancient wisdom of Egypt lives on in you. Thoth would be proud to call you his student.';
+    }
+
+    document.getElementById('qrank').textContent = rank;
+    document.getElementById('qdesc').textContent  = desc;
+}
+
+// Start quiz when section first loads
+initQuiz();
+
+/* ============================================================ NUMERAL CONVERTER */
+const HIERO = [
+    { val: 1000000, sym: '𓁨', name: 'Heh' },
+    { val: 100000,  sym: '𓆐', name: 'tadpole' },
+    { val: 10000,   sym: '𓂭', name: 'finger' },
+    { val: 1000,    sym: '𓆼', name: 'lotus' },
+    { val: 100,     sym: '𓍢', name: 'rope' },
+    { val: 10,      sym: '𓎆', name: 'heel' },
+    { val: 1,       sym: '𓏤', name: 'stroke' },
+];
+
+function toHiero(n) {
+    if (!n || n < 1) return '';
+    let out = '';
+    for (const { val, sym } of HIERO) {
+        const count = Math.floor(n / val);
+        n -= count * val;
+        if (count > 0) out += sym.repeat(count) + ' ';
+    }
+    return out.trim();
+}
+
+function convertNum() {
+    const raw = parseInt(document.getElementById('convInput').value, 10);
+    const res = document.getElementById('convResult');
+    const hint = document.getElementById('convHint');
+    if (!raw || raw < 1 || raw > 999999) {
+        res.textContent  = '—';
+        hint.textContent = 'Enter a number from 1 to 999,999';
+        return;
+    }
+    res.textContent  = toHiero(raw);
+    hint.textContent = '= ' + raw.toLocaleString() + ' in hieroglyphics';
+}
+
+function randomNum() {
+    const n = Math.floor(Math.random() * 9999) + 1;
+    document.getElementById('convInput').value = n;
+    convertNum();
+}
+
+/* ============================================================ HIEROGLYPH QUIZ */
+let hqAnswer = 0, hqStreakCount = 0, hqCorrectCount = 0, hqTotalCount = 0;
+let hqLocked = false;
+
+function hqGenerate() {
+    // Weighted distribution: more small numbers, occasionally large
+    const tier = Math.random();
+    let n;
+    if      (tier < .35) n = Math.floor(Math.random() *   99) + 1;   // 1-99
+    else if (tier < .65) n = Math.floor(Math.random() *  900) + 100; // 100-999
+    else if (tier < .88) n = Math.floor(Math.random() * 9000) + 1000;// 1000-9999
+    else                 n = Math.floor(Math.random() *90000) +10000; // 10000-99999
+    hqAnswer = n;
+    document.getElementById('hqDisplay').textContent = toHiero(n);
+    document.getElementById('hqInput').value = '';
+    document.getElementById('hqFb').textContent = '';
+    document.getElementById('hqFb').className = 'hq-fb';
+    hqLocked = false;
+    document.getElementById('hqInput').focus();
+}
+
+function submitHQ() {
+    if (hqLocked) return;
+    const raw = document.getElementById('hqInput').value.trim();
+    if (!raw) return;
+    const guess = parseInt(raw, 10);
+    hqLocked = true;
+    hqTotalCount++;
+    const fb = document.getElementById('hqFb');
+
+    if (guess === hqAnswer) {
+        hqStreakCount++;
+        hqCorrectCount++;
+        fb.textContent = '✓  Correct! The number was ' + hqAnswer.toLocaleString();
+        fb.className = 'hq-fb hq-ok';
+    } else {
+        hqStreakCount = 0;
+        fb.textContent = '✗  Not quite — that was ' + hqAnswer.toLocaleString() + '. You answered ' + guess.toLocaleString() + '.';
+        fb.className = 'hq-fb hq-no';
+    }
+
+    document.getElementById('hqStreak').textContent  = hqStreakCount;
+    document.getElementById('hqCorrect').textContent = hqCorrectCount;
+    document.getElementById('hqTotal').textContent   = hqTotalCount;
+
+    setTimeout(hqGenerate, 1600);
+}
+
+function skipHQ() {
+    if (hqLocked) return;
+    hqTotalCount++;
+    hqStreakCount = 0;
+    const fb = document.getElementById('hqFb');
+    fb.textContent = '⟶  Skipped — the answer was ' + hqAnswer.toLocaleString();
+    fb.className = 'hq-fb hq-no';
+    document.getElementById('hqTotal').textContent  = hqTotalCount;
+    document.getElementById('hqStreak').textContent = hqStreakCount;
+    hqLocked = true;
+    setTimeout(hqGenerate, 1400);
+}
+
+// Boot the quiz when the numbers section is first viewed
+(function() {
+    const origShow = window.show;
+    let hqBooted = false;
+    window.show = function(name) {
+        origShow(name);
+        if (name === 'numbers' && !hqBooted) { hqBooted = true; hqGenerate(); }
+    };
+    // Also boot if numbers is the starting section
+    if (document.getElementById('sec-numbers').classList.contains('active')) {
+        hqBooted = true; hqGenerate();
+    }
+})();
+
+/* ============================================================ PYRAMID BUILDER */
+function updatePyramid() {
+    const base   = parseInt(document.getElementById('pyrBase').value,   10);
+    const height = parseInt(document.getElementById('pyrHeight').value, 10);
+    document.getElementById('pyrBaseVal').textContent   = base;
+    document.getElementById('pyrHeightVal').textContent = height;
+
+    // Stats
+    const area   = base * base;
+    const vol    = Math.round((area * height / 3) * 10) / 10;
+    const half   = base / 2;
+    const slant  = Math.round(Math.sqrt(height * height + half * half) * 10) / 10;
+    const seked  = Math.round(half / height * 100) / 100;
+
+    document.getElementById('psArea').textContent    = area.toLocaleString() + ' m²';
+    document.getElementById('psAreaEq').textContent  = base + ' × ' + base;
+    document.getElementById('psVol').textContent     = vol.toLocaleString() + ' m³';
+    document.getElementById('psVolEq').textContent   = '⅓ × ' + area.toLocaleString() + ' × ' + height;
+    document.getElementById('psSlant').textContent   = slant + ' m';
+    document.getElementById('psSlantEq').textContent = '√(' + height + '² + ' + half + '²)';
+    document.getElementById('psSeked').textContent   = seked;
+    document.getElementById('psSekedEq').textContent = '(' + base + '/2) ÷ ' + height;
+
+    drawPyramidCanvas(base, height);
+}
+
+function drawPyramidCanvas(base, height) {
+    const canvas = document.getElementById('pyrCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+    ctx.clearRect(0, 0, W, H);
+
+    const padL = 18, padR = 52, padT = 24, padB = 48;
+    const drawW = W - padL - padR;
+    const drawH = H - padT - padB;
+
+    const scale = Math.min(drawW / base, drawH / height);
+    const pyrW  = base   * scale;
+    const pyrH  = height * scale;
+
+    const cx    = padL + drawW / 2;
+    const baseY = padT + drawH;          // bottom of pyramid
+    const apexY = baseY - pyrH;
+    const leftX = cx - pyrW / 2;
+    const rightX= cx + pyrW / 2;
+
+    // Ground line
+    ctx.beginPath();
+    ctx.moveTo(padL, baseY + 1);
+    ctx.lineTo(W - padR + 10, baseY + 1);
+    ctx.strokeStyle = 'rgba(201,162,39,.25)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    // Shadow at base
+    const shadowGrad = ctx.createLinearGradient(leftX, baseY, rightX, baseY);
+    shadowGrad.addColorStop(0,   'rgba(0,0,0,0)');
+    shadowGrad.addColorStop(.5,  'rgba(0,0,0,.4)');
+    shadowGrad.addColorStop(1,   'rgba(0,0,0,0)');
+    ctx.beginPath();
+    ctx.ellipse(cx, baseY + 4, pyrW * .42, 6, 0, 0, Math.PI * 2);
+    ctx.fillStyle = shadowGrad;
+    ctx.fill();
+
+    // Pyramid fill
+    const fillGrad = ctx.createLinearGradient(cx, apexY, cx, baseY);
+    fillGrad.addColorStop(0,   'rgba(255,215,0,.18)');
+    fillGrad.addColorStop(.55, 'rgba(180,130,20,.28)');
+    fillGrad.addColorStop(1,   'rgba(100,70,8,.42)');
+    ctx.beginPath();
+    ctx.moveTo(cx,     apexY);
+    ctx.lineTo(rightX, baseY);
+    ctx.lineTo(leftX,  baseY);
+    ctx.closePath();
+    ctx.fillStyle = fillGrad;
+    ctx.fill();
+
+    // Left face shading
+    const leftGrad = ctx.createLinearGradient(leftX, baseY, cx, (apexY+baseY)/2);
+    leftGrad.addColorStop(0, 'rgba(0,0,0,.25)');
+    leftGrad.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.beginPath();
+    ctx.moveTo(cx, apexY);
+    ctx.lineTo(leftX, baseY);
+    ctx.lineTo(cx, baseY);
+    ctx.closePath();
+    ctx.fillStyle = leftGrad;
+    ctx.fill();
+
+    // Pyramid outline
+    ctx.beginPath();
+    ctx.moveTo(cx,     apexY);
+    ctx.lineTo(rightX, baseY);
+    ctx.lineTo(leftX,  baseY);
+    ctx.closePath();
+    ctx.strokeStyle = '#C9A227';
+    ctx.lineWidth = 2.2;
+    ctx.stroke();
+
+    // Apex glow
+    const ag = ctx.createRadialGradient(cx, apexY, 0, cx, apexY, 14);
+    ag.addColorStop(0, 'rgba(255,215,0,.85)');
+    ag.addColorStop(1, 'rgba(255,215,0,0)');
+    ctx.beginPath();
+    ctx.arc(cx, apexY, 14, 0, Math.PI*2);
+    ctx.fillStyle = ag;
+    ctx.fill();
+
+    ctx.font = 'bold 12px "Crimson Text",Georgia,serif';
+    ctx.textBaseline = 'middle';
+
+    // ---- Base dimension line ----
+    const dimBaseY = baseY + 20;
+    const arrowLen = 7;
+    ctx.strokeStyle = 'rgba(42,191,191,.8)';
+    ctx.lineWidth = 1.3;
+
+    ctx.beginPath();
+    ctx.moveTo(leftX, dimBaseY);
+    ctx.lineTo(rightX, dimBaseY);
+    ctx.stroke();
+    // arrowheads
+    [[leftX,1],[rightX,-1]].forEach(([x,dir]) => {
+        ctx.beginPath();
+        ctx.moveTo(x, dimBaseY);
+        ctx.lineTo(x + dir*arrowLen, dimBaseY - 3.5);
+        ctx.moveTo(x, dimBaseY);
+        ctx.lineTo(x + dir*arrowLen, dimBaseY + 3.5);
+        ctx.stroke();
+    });
+    ctx.fillStyle = '#2ABFBF';
+    ctx.textAlign = 'center';
+    ctx.fillText(base + ' m', cx, dimBaseY + 13);
+
+    // ---- Height dimension line ----
+    const dimHX = rightX + 16;
+    ctx.strokeStyle = 'rgba(42,191,191,.8)';
+    ctx.lineWidth = 1.3;
+    ctx.setLineDash([4,3]);
+    ctx.beginPath();
+    ctx.moveTo(dimHX, apexY);
+    ctx.lineTo(dimHX, baseY);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    // arrowheads
+    [[apexY,1],[baseY,-1]].forEach(([y,dir]) => {
+        ctx.beginPath();
+        ctx.moveTo(dimHX, y);
+        ctx.lineTo(dimHX - 3.5, y + dir*arrowLen);
+        ctx.moveTo(dimHX, y);
+        ctx.lineTo(dimHX + 3.5, y + dir*arrowLen);
+        ctx.stroke();
+    });
+    ctx.save();
+    ctx.translate(dimHX + 14, (apexY + baseY) / 2);
+    ctx.rotate(Math.PI / 2);
+    ctx.fillStyle = '#2ABFBF';
+    ctx.textAlign = 'center';
+    ctx.fillText(height + ' m', 0, 0);
+    ctx.restore();
+}
+
+// Init pyramid on page load
+updatePyramid();
+
+/* ============================================================ SECTION PROGRESS */
+const SECTION_PROBS = {
+    numbers:   ['np1','np2','np3'],
+    fractions: ['fp1','fp2','fp3'],
+    geometry:  ['gp1','gp2','gp3'],
+    algebra:   ['ap1','ap2','ap3'],
+    patterns:  ['pp1','pp2','pp3'],
+};
+
+const answeredProbs = new Set();
+const PROGRESS_KEY  = 'egypt-math-v1';
+
+function saveProgress() {
+    try { localStorage.setItem(PROGRESS_KEY, JSON.stringify([...answeredProbs])); } catch(e) {}
+}
+
+function loadProgress() {
+    try {
+        JSON.parse(localStorage.getItem(PROGRESS_KEY) || '[]')
+            .forEach(id => answeredProbs.add(id));
+        Object.entries(SECTION_PROBS).forEach(([sec, probs]) => {
+            if (probs.every(id => answeredProbs.has(id))) markSectionDone(sec);
+        });
+    } catch(e) {}
+}
+
+function checkSectionComplete(sec) {
+    const probs = SECTION_PROBS[sec];
+    if (probs && probs.every(id => answeredProbs.has(id))) markSectionDone(sec);
+    saveProgress();
+}
+
+function markSectionDone(sec) {
+    const badge = document.getElementById('badge-' + sec);
+    if (badge) badge.classList.add('earned');
+}
+
+// Inject ✓ badge spans into each relevant nav button then restore saved progress
+(function bootstrap() {
+    Object.keys(SECTION_PROBS).forEach(sec => {
+        const btn = document.querySelector(`[data-sec="${sec}"]`);
+        if (!btn) return;
+        const b  = document.createElement('span');
+        b.className  = 'nav-badge';
+        b.id         = 'badge-' + sec;
+        b.textContent = '✓';
+        btn.appendChild(b);
+    });
+    loadProgress();
+})();
+
+/* ============================================================ SOLUTIONS */
+const SOLUTIONS = {
+    /* ---- Numbers ---- */
+    np1: { steps: [
+        'Count each <em>type</em> of symbol separately — order never matters in Egyptian numerals.',
+        '𓆼𓆼𓆼 &nbsp;=&nbsp; 3 lotus flowers × 1,000 &nbsp;=&nbsp; <strong>3,000</strong>',
+        '𓍢𓍢 &nbsp;=&nbsp; 2 coiled ropes × 100 &nbsp;=&nbsp; <strong>200</strong>',
+        '𓎆𓎆𓎆𓎆𓎆 &nbsp;=&nbsp; 5 heel bones × 10 &nbsp;=&nbsp; <strong>50</strong>',
+        '𓏤𓏤𓏤𓏤𓏤𓏤𓏤 &nbsp;=&nbsp; 7 strokes × 1 &nbsp;=&nbsp; <strong>7</strong>',
+        'Add all parts: 3,000 + 200 + 50 + 7 = <strong style="color:#FFD700">3,257</strong>',
+    ]},
+    np2: { steps: [
+        'Break 1,024 into place-value parts: 1×1,000 + 0×100 + 2×10 + 4×1.',
+        '1,000 → one lotus flower: <span style="font-size:1.3rem">𓆼</span>',
+        '0 hundreds → nothing at all. Egyptians simply skip any zero place (no zero symbol needed).',
+        '20 → two heel bones: <span style="font-size:1.3rem">𓎆𓎆</span>',
+        '4 → four strokes: <span style="font-size:1.3rem">𓏤𓏤𓏤𓏤</span>',
+        'Together: <strong style="color:#FFD700;font-size:1.25rem">𓆼 &thinsp; 𓎆𓎆 &thinsp; 𓏤𓏤𓏤𓏤</strong>',
+    ]},
+    np3: { steps: [
+        'Break 3,650 into place values: 3,000 + 600 + 50 + 0 ones.',
+        '3,000 → three lotus flowers (𓆼 each = 1,000).',
+        '600 → six coiled ropes (𓍢 each = 100).',
+        '50 → five heel bones (𓎆 each = 10).',
+        '0 ones → nothing (skip). Answer: <strong style="color:#FFD700">3 lotus, 6 ropes, 5 heel bones</strong>.',
+    ]},
+
+    /* ---- Fractions ---- */
+    fp1: { steps: [
+        'Add 1/2 + 1/4. We need a common denominator.',
+        'The smallest number divisible by both 2 and 4 is <strong>4</strong>.',
+        'Convert 1/2 → 2/4 (multiply numerator and denominator each by 2).',
+        'Now add: 2/4 + 1/4 = <strong style="color:#FFD700">3/4</strong>.',
+        'Check: 2 + 1 = 3, denominator stays 4. ✓',
+    ]},
+    fp2: { steps: [
+        'Add 1/2 + 1/8. We need a common denominator.',
+        'The smallest number divisible by both 2 and 8 is <strong>8</strong>.',
+        'Convert 1/2 → 4/8 (multiply numerator and denominator each by 4).',
+        'Now add: 4/8 + 1/8 = <strong style="color:#FFD700">5/8</strong>.',
+        'Check: 4 + 1 = 5, denominator stays 8. ✓',
+    ]},
+    fp3: { steps: [
+        'Egyptian rules: each fraction must have numerator 1, and no fraction may repeat.',
+        'Start with the largest unit fraction that fits inside 3/4 — that is 1/2.',
+        'Subtract: 3/4 − 1/2 = 3/4 − 2/4 = <strong>1/4</strong> remaining.',
+        '1/4 is already a unit fraction, so we are done.',
+        '<strong style="color:#FFD700">3/4 = 1/2 + 1/4</strong>. Both have numerator 1; neither repeats. ✓',
+    ]},
+
+    /* ---- Geometry ---- */
+    gp1: { steps: [
+        'Formula: V = ⅓ × s² × h &nbsp;(s = 12 m, h = 9 m).',
+        'Step 1 — square the base: 12² = 12 × 12 = <strong>144 m²</strong>.',
+        'Step 2 — multiply by height: 144 × 9 = <strong>1,296</strong>.',
+        'Step 3 — take one-third: 1,296 ÷ 3 = <strong style="color:#FFD700">432 m³</strong>.',
+        'Check: ⅓ × 144 × 9 = 432 ✓',
+    ]},
+    gp2: { steps: [
+        'Pythagorean theorem: a² + b² = c² &nbsp;(a = 3, b = 4).',
+        'Square each leg: 3² = <strong>9</strong> &nbsp;and&nbsp; 4² = <strong>16</strong>.',
+        'Add: 9 + 16 = <strong>25</strong>.',
+        'Hypotenuse: c = √25 = <strong style="color:#FFD700">5 cubits</strong>.',
+        'This is the famous 3-4-5 right triangle — Egyptian rope-stretchers used it every day!',
+    ]},
+    gp3: { steps: [
+        'Formula: A = ½ × base × height &nbsp;(base = 14 m, height = 10 m).',
+        'Multiply: 14 × 10 = <strong>140</strong>.',
+        'Halve it: 140 ÷ 2 = <strong style="color:#FFD700">70 m²</strong>.',
+        'Check: ½ × 14 × 10 = 70 ✓',
+    ]},
+
+    /* ---- Algebra ---- */
+    ap1: { steps: [
+        'Equation: x ÷ 4 = 15.',
+        'To isolate x, <em>undo</em> the division — multiply both sides by 4:',
+        '(x ÷ 4) × 4 = 15 × 4',
+        'x = <strong style="color:#FFD700">60</strong>.',
+        'Check: 60 ÷ 4 = 15 ✓',
+    ]},
+    ap2: { steps: [
+        'Equation: x + x/2 = 9.',
+        'Rewrite x as 2x/2 so both terms share denominator 2:',
+        '2x/2 + x/2 = 9 &nbsp;→&nbsp; <strong>3x/2 = 9</strong>.',
+        'Multiply both sides by 2: 3x = 18.',
+        'Divide both sides by 3: x = <strong style="color:#FFD700">6</strong>.',
+        'Check: 6 + 6/2 = 6 + 3 = 9 ✓',
+    ]},
+    ap3: { steps: [
+        'Equation: 3x + 4 = 25.',
+        'Subtract 4 from both sides: 3x = 21.',
+        'Divide both sides by 3: x = <strong style="color:#FFD700">7</strong>.',
+        'Check: 3 × 7 + 4 = 21 + 4 = 25 ✓',
+    ]},
+
+    /* ---- Patterns ---- */
+    pp1: { steps: [
+        'Find the common difference: 7 − 3 = <strong>4</strong>.',
+        'Verify: 11 − 7 = 4 ✓ &nbsp;and&nbsp; 15 − 11 = 4 ✓. It is constant.',
+        'Add it to the last term: 15 + 4 = <strong style="color:#FFD700">19</strong>.',
+    ]},
+    pp2: { steps: [
+        'Egyptian doubling — start with 9 and double each row:',
+        '1 → 9 &nbsp;|&nbsp; 2 → 18 &nbsp;|&nbsp; 4 → 36',
+        'Decompose 5 as a sum of powers of 2: 5 = 4 + 1.',
+        'Add the matching rows: row 4 (36) + row 1 (9) = <strong style="color:#FFD700">45</strong>.',
+        'Check: 5 × 9 = 45 ✓',
+    ]},
+    pp3: { steps: [
+        '7 temples × 7 priests per temple = <strong>49</strong> priests in total.',
+        '49 priests × 7 cats each = <strong style="color:#FFD700">343</strong> cats in total.',
+        'Or: 7 × 7 × 7 = 7³ = 343.',
+        'This is a geometric sequence (ratio 7): 7 → 49 → 343 → ...',
+    ]},
+};
+</script>
+</body>
+</html>
