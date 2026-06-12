@@ -836,6 +836,68 @@
         }
         .hq-skip-btn:hover { border-color: var(--gold); color: var(--gold); }
 
+        /* ===== EGYPTIAN MULTIPLICATION TRAINER ===== */
+        .emt-problem {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(1.8rem, 5vw, 2.6rem);
+            color: var(--bright-gold);
+            text-align: center;
+            margin: 1.2rem 0 .3rem;
+            letter-spacing: 3px;
+        }
+        .emt-goal {
+            text-align: center;
+            color: var(--sand);
+            font-style: italic;
+            margin-bottom: 1rem;
+            font-size: .95rem;
+        }
+        .emt-table { max-width: 400px; margin: 0 auto; }
+        .emt-row {
+            display: grid;
+            grid-template-columns: 1fr 36px 1fr;
+            align-items: center;
+            padding: .55rem 1rem;
+            margin: .4rem 0;
+            background: rgba(201,162,39,.05);
+            border: 1px solid rgba(201,162,39,.28);
+            border-radius: 3px;
+            cursor: pointer;
+            font-family: 'Cinzel', serif;
+            font-size: 1.15rem;
+            color: var(--sand);
+            transition: all .15s;
+            user-select: none;
+        }
+        .emt-row:hover { border-color: var(--gold); background: rgba(201,162,39,.1); }
+        .emt-row.sel {
+            background: rgba(255,215,0,.13);
+            border-color: var(--bright-gold);
+            color: var(--bright-gold);
+            box-shadow: 0 0 10px rgba(255,215,0,.25);
+        }
+        .emt-row span:first-child { text-align: right; }
+        .emt-row span:last-child  { text-align: left; }
+        .emt-arrow { color: var(--turquoise); text-align: center; }
+        .emt-tally {
+            text-align: center;
+            min-height: 1.7rem;
+            margin-top: .9rem;
+            font-size: 1.02rem;
+            color: var(--sand);
+        }
+        .emt-mini { width: 90px; font-size: 1.1rem; padding: .45rem .5rem; }
+        .emt-custom {
+            display: flex;
+            gap: .6rem;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 1.1rem;
+            color: var(--sand);
+            font-size: .9rem;
+        }
+
         /* ===== PYRAMID BUILDER ===== */
         .pyr-builder-grid {
             display: grid;
@@ -1699,6 +1761,44 @@
     </div>
 
     <div class="card">
+        <h3 class="card-title">✶ Egyptian Multiplication Trainer</h3>
+        <p>Multiply like a scribe! Build the doubling table, then <strong>tap the rows whose left numbers add up to the multiplier</strong>. The right column of your chosen rows adds up to the answer — no times tables needed.</p>
+
+        <div class="hq-scorebar" style="margin-top:1.4rem;">
+            <div class="hq-score-item">
+                <div class="hq-score-num" id="emtSolved">0</div>
+                <div class="hq-score-lbl">SOLVED</div>
+            </div>
+            <div class="hq-score-item">
+                <div class="hq-score-num" id="emtStreak">0</div>
+                <div class="hq-score-lbl">STREAK</div>
+            </div>
+        </div>
+
+        <div class="emt-problem" id="emtProblem">13 × 7</div>
+        <div class="emt-goal" id="emtGoal">Tap the rows whose <strong>left numbers add up to 13</strong></div>
+
+        <div class="emt-table" id="emtTable"></div>
+
+        <div class="emt-tally" id="emtTally">&nbsp;</div>
+        <div class="hq-fb" id="emtFb"></div>
+
+        <div class="hq-input-row" style="margin-top:1rem;">
+            <button class="conv-btn" style="margin-top:0;" onclick="emtRandom()">⚄ New Problem</button>
+            <button class="hq-skip-btn" onclick="emtReveal()">Reveal ☥</button>
+        </div>
+
+        <div class="emt-custom">
+            <span>Or try your own:</span>
+            <input class="conv-input emt-mini" type="number" id="emtInA" min="2" max="50" placeholder="13">
+            <span style="font-family:'Cinzel',serif;color:var(--gold);">×</span>
+            <input class="conv-input emt-mini" type="number" id="emtInB" min="2" max="99" placeholder="7"
+                   onkeydown="if(event.key==='Enter')emtCustom()">
+            <button class="hq-skip-btn" onclick="emtCustom()">Build →</button>
+        </div>
+    </div>
+
+    <div class="card">
         <h3 class="card-title">Arithmetic Sequences: The Pharaoh's Staircase</h3>
         <p>An <strong>arithmetic sequence</strong> adds the same number each time (called the <em>common difference</em>).</p>
 
@@ -2369,6 +2469,110 @@ function drawPyramidCanvas(base, height) {
 
 // Init pyramid on page load
 updatePyramid();
+
+/* ============================================================ MULTIPLICATION TRAINER */
+let emtA = 13, emtB = 7, emtRows = [], emtSel = new Set();
+let emtDone = false, emtRevealed = false;
+let emtSolvedCount = 0, emtStreakCount = 0;
+
+function emtBuild(a, b) {
+    emtA = a; emtB = b;
+    emtSel = new Set(); emtDone = false; emtRevealed = false;
+    emtRows = [];
+    let p = 1, v = b;
+    while (p <= a) { emtRows.push([p, v]); p *= 2; v *= 2; }
+    document.getElementById('emtProblem').textContent = a + ' × ' + b;
+    document.getElementById('emtGoal').innerHTML =
+        'Tap the rows whose <strong>left numbers add up to ' + a + '</strong>';
+    document.getElementById('emtTable').innerHTML = emtRows.map((r, i) =>
+        `<div class="emt-row" id="emt-row-${i}" onclick="emtToggle(${i})">` +
+        `<span>${r[0]}</span><span class="emt-arrow">→</span><span>${r[1]}</span></div>`
+    ).join('');
+    document.getElementById('emtTally').innerHTML = '&nbsp;';
+    const fb = document.getElementById('emtFb');
+    fb.textContent = ''; fb.className = 'hq-fb';
+}
+
+function emtToggle(i) {
+    if (emtDone) return;
+    if (emtSel.has(i)) emtSel.delete(i); else emtSel.add(i);
+    document.getElementById('emt-row-' + i).classList.toggle('sel');
+    emtUpdate();
+}
+
+function emtUpdate() {
+    const tally = document.getElementById('emtTally');
+    const fb    = document.getElementById('emtFb');
+    if (emtSel.size === 0) {
+        tally.textContent = 'No rows selected — the left side must total ' + emtA + '.';
+        fb.textContent = ''; fb.className = 'hq-fb';
+        return;
+    }
+    const sel  = [...emtSel].sort((x, y) => emtRows[x][0] - emtRows[y][0]);
+    const lhs  = sel.map(i => emtRows[i][0]);
+    const rhs  = sel.map(i => emtRows[i][1]);
+    const lSum = lhs.reduce((s, n) => s + n, 0);
+    if (lSum === emtA) {
+        const answer = rhs.reduce((s, n) => s + n, 0);
+        tally.innerHTML = lhs.join(' + ') + ' = <strong style="color:var(--bright-gold)">' + emtA + '</strong> ✓';
+        fb.innerHTML = '𓂀 &nbsp;Now add the right column: ' + rhs.join(' + ') +
+            ' = <strong>' + answer + '</strong> &nbsp;— so ' + emtA + ' × ' + emtB +
+            ' = <strong>' + answer + '</strong>. The scribes salute you!';
+        fb.className = 'hq-fb hq-ok';
+        emtDone = true;
+        if (!emtRevealed) {
+            emtSolvedCount++; emtStreakCount++;
+            document.getElementById('emtSolved').textContent = emtSolvedCount;
+            document.getElementById('emtStreak').textContent = emtStreakCount;
+        }
+    } else if (lSum > emtA) {
+        tally.textContent = lhs.join(' + ') + ' = ' + lSum + ' — too high! Deselect a row.';
+        fb.textContent = ''; fb.className = 'hq-fb';
+    } else {
+        tally.textContent = lhs.join(' + ') + ' = ' + lSum + ' — keep going, you need ' + (emtA - lSum) + ' more.';
+        fb.textContent = ''; fb.className = 'hq-fb';
+    }
+}
+
+function emtReveal() {
+    if (emtDone) return;
+    emtRevealed = true;
+    emtStreakCount = 0;
+    document.getElementById('emtStreak').textContent = 0;
+    emtSel = new Set();
+    document.querySelectorAll('.emt-row.sel').forEach(el => el.classList.remove('sel'));
+    // Greedy from the largest row — works because rows are the binary decomposition
+    let rem = emtA;
+    for (let i = emtRows.length - 1; i >= 0; i--) {
+        if (emtRows[i][0] <= rem) {
+            rem -= emtRows[i][0];
+            emtSel.add(i);
+            document.getElementById('emt-row-' + i).classList.add('sel');
+        }
+    }
+    emtUpdate();
+}
+
+function emtRandom() {
+    const a = 5 + Math.floor(Math.random() * 26);  // 5–30
+    const b = 3 + Math.floor(Math.random() * 23);  // 3–25
+    emtBuild(a, b);
+}
+
+function emtCustom() {
+    const a = parseInt(document.getElementById('emtInA').value, 10);
+    const b = parseInt(document.getElementById('emtInB').value, 10);
+    const fb = document.getElementById('emtFb');
+    if (!a || !b || a < 2 || a > 50 || b < 2 || b > 99) {
+        fb.textContent = 'Enter a multiplier from 2–50 and a number from 2–99.';
+        fb.className = 'hq-fb hq-no';
+        return;
+    }
+    emtBuild(a, b);
+}
+
+// Build the worked example from the lesson as the starting puzzle
+emtBuild(13, 7);
 
 /* ============================================================ SECTION PROGRESS */
 const SECTION_PROBS = {
