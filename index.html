@@ -862,6 +862,7 @@
             background: rgba(201,162,39,.05);
             border: 1px solid rgba(201,162,39,.28);
             border-radius: 3px;
+            width: 100%;
             cursor: pointer;
             font-family: 'Cinzel', serif;
             font-size: 1.15rem;
@@ -870,6 +871,7 @@
             user-select: none;
         }
         .emt-row:hover { border-color: var(--gold); background: rgba(201,162,39,.1); }
+        .emt-row:focus-visible, .lesson-list li:focus-visible { outline: 2px solid var(--bright-gold); outline-offset: 2px; }
         .emt-row.sel {
             background: rgba(255,215,0,.13);
             border-color: var(--bright-gold);
@@ -1262,7 +1264,7 @@
         </div>
 
         <div class="prob" id="np3">
-            <p class="prob-text"><strong>Problem 3.</strong> The scribe Ahmes wrote the number of days in 10 years in the Rhind Papyrus. One Egyptian year = 365 days. What is 365 × 10 = <strong>3,650</strong>?<br>How many lotus flowers (𓆼 = 1,000), coiled ropes (𓍢 = 100), and heel bones (𓎆 = 10) does he need?</p>
+            <p class="prob-text"><strong>Problem 3.</strong> Imagine the scribe Ahmes recording the number of days in 10 years. One Egyptian year = 365 days, so 365 × 10 = <strong>3,650</strong>.<br>How many lotus flowers (𓆼 = 1,000), coiled ropes (𓍢 = 100), and heel bones (𓎆 = 10) does he need?</p>
             <div class="opts">
                 <button class="opt" onclick="check(this,'np3',false)">A) &nbsp;3 lotus, 65 heel bones</button>
                 <button class="opt" onclick="check(this,'np3',true )">B) &nbsp;3 lotus, 6 ropes, 5 heel bones</button>
@@ -1319,7 +1321,7 @@
             </div>
             <div class="fact-card">
                 <div class="fact-num">~1850 BCE</div>
-                <div class="fact-lbl"><strong>The Moscow Papyrus</strong><br>25 problems including the earliest known pyramid volume formula</div>
+                <div class="fact-lbl"><strong>The Moscow Papyrus</strong><br>25 problems, including the volume of a truncated pyramid</div>
             </div>
             <div class="fact-card">
                 <div class="fact-num">3,000+</div>
@@ -1332,11 +1334,11 @@
     <div class="card">
         <h3 class="card-title">Your Five Sacred Lessons</h3>
         <ul class="lesson-list">
-            <li onclick="show('numbers')"><span class="lnav-icon">𓏤</span><strong>Hieroglyphic Numbers — The Number System</strong><br><span style="color:var(--sand);font-size:.95rem;">Read and write numbers the way scribes did 5,000 years ago — plus an interactive converter</span></li>
-            <li onclick="show('fractions')"><span class="lnav-icon">𓂀</span><strong>The Eye of Horus — Fractions</strong><br><span style="color:var(--sand);font-size:.95rem;">How the battle of Horus and Set produced a fraction system used for 3,000 years</span></li>
-            <li onclick="show('geometry')"><span class="lnav-icon">△</span><strong>The Pyramids — Geometry</strong><br><span style="color:var(--sand);font-size:.95rem;">Calculate area, perimeter, and volume of Egypt's most iconic structures</span></li>
-            <li onclick="show('algebra')"><span class="lnav-icon">∞</span><strong>The Nile — Algebra</strong><br><span style="color:var(--sand);font-size:.95rem;">Solve for the unknown "aha" — just like Egyptian scribes 4,000 years ago</span></li>
-            <li onclick="show('patterns')"><span class="lnav-icon">✦</span><strong>The Stars — Patterns & Sequences</strong><br><span style="color:var(--sand);font-size:.95rem;">Discover the hidden patterns in numbers and Egyptian art</span></li>
+            <li role="button" tabindex="0" onclick="show('numbers')"><span class="lnav-icon">𓏤</span><strong>Hieroglyphic Numbers — The Number System</strong><br><span style="color:var(--sand);font-size:.95rem;">Read and write numbers the way scribes did 5,000 years ago — plus an interactive converter</span></li>
+            <li role="button" tabindex="0" onclick="show('fractions')"><span class="lnav-icon">𓂀</span><strong>The Eye of Horus — Fractions</strong><br><span style="color:var(--sand);font-size:.95rem;">The legend of Horus and Set — and the unit fractions Egyptians used for 3,000 years</span></li>
+            <li role="button" tabindex="0" onclick="show('geometry')"><span class="lnav-icon">△</span><strong>The Pyramids — Geometry</strong><br><span style="color:var(--sand);font-size:.95rem;">Calculate area, perimeter, and volume of Egypt's most iconic structures</span></li>
+            <li role="button" tabindex="0" onclick="show('algebra')"><span class="lnav-icon">∞</span><strong>The Nile — Algebra</strong><br><span style="color:var(--sand);font-size:.95rem;">Solve for the unknown "aha" — just like Egyptian scribes 4,000 years ago</span></li>
+            <li role="button" tabindex="0" onclick="show('patterns')"><span class="lnav-icon">✦</span><strong>The Stars — Patterns & Sequences</strong><br><span style="color:var(--sand);font-size:.95rem;">Discover the hidden patterns in numbers and Egyptian art</span></li>
         </ul>
         <div style="margin-top:1.5rem; text-align:center;">
             <button class="cta" onclick="show('numbers')">Begin Lesson 1 →</button>
@@ -1355,7 +1357,7 @@
     <div class="card">
         <div class="myth-box">
             <span class="myth-label">✦ THE MYTH OF HORUS AND SET</span>
-            <p>Horus, son of Osiris, battled the evil god Set to avenge his father's murder. During their fierce duel, Set tore out Horus's left eye and shattered it into <strong>six pieces</strong>, scattering them across Egypt. The god Thoth — master of mathematics and magic — gathered all the pieces and reassembled them. But the pieces didn't quite add up... and that mathematical mystery became a fraction system used for thousands of years.</p>
+            <p>Horus, son of Osiris, battled the evil god Set to avenge his father's murder. During their fierce duel, Set tore out Horus's left eye and shattered it into <strong>six pieces</strong>, scattering them across Egypt. The god Thoth — master of mathematics and magic — gathered all the pieces and reassembled them. But the pieces didn't quite add up... and, as a popular legend tells it, that mathematical mystery became a fraction system.</p>
         </div>
 
         <h3 class="card-title">The Six Pieces of the Eye</h3>
@@ -1400,7 +1402,8 @@
         <div class="math-box">
             <span class="math-label">THE MATHEMATICAL MYSTERY</span>
             <div class="formula">1/2 + 1/4 + 1/8 + 1/16 + 1/32 + 1/64 = <strong style="color:#FFD700">63/64</strong></div>
-            <p style="text-align:center;margin-top:.5rem;color:var(--sand);font-size:.95rem;">The six pieces only sum to <strong>63/64</strong> — not a whole!<br>Egyptians said Thoth magically supplied the missing <strong>1/64</strong>.</p>
+            <p style="text-align:center;margin-top:.5rem;color:var(--sand);font-size:.95rem;">The six pieces only sum to <strong>63/64</strong> — not a whole!<br>Legend says Thoth magically supplied the missing <strong>1/64</strong>.</p>
+            <p style="text-align:center;margin-top:.5rem;color:var(--sand);font-size:.85rem;font-style:italic;">Historians debate whether the Egyptians themselves linked the Eye to these fractions — but the fractions and the math are real.</p>
         </div>
     </div>
 
@@ -1510,7 +1513,7 @@
             <span class="math-label">VOLUME OF A PYRAMID</span>
             <div class="formula">V = ⅓ × base area × height</div>
             <p style="text-align:center;color:var(--sand);font-size:.9rem;margin-top:.5rem;">
-                This exact formula appears in the Moscow Papyrus (~1850 BCE) — the oldest known pyramid volume calculation!
+                The Moscow Papyrus (~1850 BCE) calculates the volume of a <em>truncated</em> pyramid (one with its top cut off) — a harder problem that shows Egyptian scribes understood how pyramid volume works.
             </p>
         </div>
 
@@ -1518,7 +1521,7 @@
             <span class="math-label">THE 3-4-5 RIGHT TRIANGLE (Pythagorean Triple)</span>
             <div class="formula">3² + 4² = 9 + 16 = 25 = 5²</div>
             <p style="text-align:center;color:var(--sand);font-size:.9rem;margin-top:.5rem;">
-                Egyptian builders used ropes knotted at 12 equal intervals. Stretched into a 3-4-5 triangle, this made a <em>perfect right angle</em>. Workers who did this were called <em>harpedonaptae</em> — "rope stretchers."
+                A popular story says Egyptian surveyors used ropes knotted at 12 equal intervals. Stretched into a 3-4-5 triangle, this makes a <em>perfect right angle</em>. The Greeks called Egyptian surveyors <em>harpedonaptae</em> — "rope stretchers." Historians aren't sure the 3-4-5 trick was really used, but the math works every time!
             </p>
         </div>
 
@@ -1701,7 +1704,7 @@
         </div>
 
         <div class="prob" id="ap2">
-            <p class="prob-text"><strong>Problem 2 (from the Rhind Papyrus).</strong> "A quantity and its half equals 9. What is the quantity?" (Solve: x + x/2 = 9)</p>
+            <p class="prob-text"><strong>Problem 2 (adapted from the Rhind Papyrus).</strong> "A quantity and its half equals 9. What is the quantity?" (Solve: x + x/2 = 9)</p>
             <div class="opts">
                 <button class="opt" onclick="check(this,'ap2',false)">A) &nbsp;4.5</button>
                 <button class="opt" onclick="check(this,'ap2',true )">B) &nbsp;6</button>
@@ -1943,6 +1946,14 @@ let t = 0;
 })();
 
 /* ============================================================ NAV */
+// Enter/Space activate non-button elements marked role="button" (the lesson list)
+document.addEventListener('keydown', e => {
+    if ((e.key === 'Enter' || e.key === ' ') && e.target.matches('[role="button"]')) {
+        e.preventDefault();
+        e.target.click();
+    }
+});
+
 function enterTemple() {
     document.getElementById('mainNav').scrollIntoView({behavior:'smooth'});
 }
@@ -2051,7 +2062,7 @@ const QQ = [
       ans:1,
       exp:'A = ½ × 14 × 10 = ½ × 140 = 70 m².' },
     { cat:'ALGEBRA',
-      q:'From the Rhind Papyrus: <em>"A quantity and its quarter equals 20."</em> Solve: <strong>x + x/4 = 20</strong>',
+      q:'Adapted from the Rhind Papyrus: <em>"A quantity and its quarter equals 20."</em> Solve: <strong>x + x/4 = 20</strong>',
       opts:['x = 5','x = 15','x = 16','x = 24'],
       ans:2,
       exp:'5x/4 = 20 → x = 20 × 4/5 = 16. Check: 16 + 16/4 = 16 + 4 = 20 ✓' },
@@ -2487,8 +2498,8 @@ function emtBuild(a, b, scored) {
         'Tap the rows whose <strong>left numbers add up to ' + a + '</strong>' +
         (scored ? '' : ' <em>(practice — not scored)</em>');
     document.getElementById('emtTable').innerHTML = emtRows.map((r, i) =>
-        `<div class="emt-row" id="emt-row-${i}" onclick="emtToggle(${i})">` +
-        `<span>${r[0]}</span><span class="emt-arrow">→</span><span>${r[1]}</span></div>`
+        `<button type="button" class="emt-row" id="emt-row-${i}" aria-pressed="false" onclick="emtToggle(${i})">` +
+        `<span>${r[0]}</span><span class="emt-arrow">→</span><span>${r[1]}</span></button>`
     ).join('');
     document.getElementById('emtTally').innerHTML = '&nbsp;';
     const fb = document.getElementById('emtFb');
@@ -2505,10 +2516,16 @@ function emtAbandon() {
     if (emtScored && !emtDone) emtResetStreak();
 }
 
+function emtMark(i, on) {
+    const row = document.getElementById('emt-row-' + i);
+    row.classList.toggle('sel', on);
+    row.setAttribute('aria-pressed', on);
+}
+
 function emtToggle(i) {
     if (emtDone) return;
     if (emtSel.has(i)) emtSel.delete(i); else emtSel.add(i);
-    document.getElementById('emt-row-' + i).classList.toggle('sel');
+    emtMark(i, emtSel.has(i));
     emtUpdate();
 }
 
@@ -2555,15 +2572,15 @@ function emtReveal() {
     if (emtDone) return;
     emtAbandon();
     emtDone = true;
+    emtSel.forEach(i => emtMark(i, false));
     emtSel = new Set();
-    document.querySelectorAll('.emt-row.sel').forEach(el => el.classList.remove('sel'));
     // Greedy from the largest row — works because rows are the binary decomposition
     let rem = emtA;
     for (let i = emtRows.length - 1; i >= 0; i--) {
         if (emtRows[i][0] <= rem) {
             rem -= emtRows[i][0];
             emtSel.add(i);
-            document.getElementById('emt-row-' + i).classList.add('sel');
+            emtMark(i, true);
         }
     }
     const { lhs, rhs, rSum } = emtSums();
