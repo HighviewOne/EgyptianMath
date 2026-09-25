@@ -31,7 +31,7 @@ Temple of Numbers is a **single-page, zero-dependency** educational website that
 | 𓂀 **Fractions** | Eye of Horus unit fractions | — |
 | 📐 **Geometry** | Pyramid formulas (area, volume, seked) | Pyramid Builder |
 | 𓂓 **Algebra** | Rhind Papyrus "aha" problems | — |
-| 🔢 **Patterns** | Doubling sequences | — |
+| 🔢 **Patterns** | Doubling sequences | Multiplication Trainer |
 | 🏆 **Grand Quiz** | All topics, 12 questions | Rank title at end |
 
 ### Highlights
@@ -39,6 +39,7 @@ Temple of Numbers is a **single-page, zero-dependency** educational website that
 - **Hieroglyph Number Converter** — type any number and see it written in Egyptian hieroglyphs
 - **Hieroglyph Speed Quiz** — read hieroglyphs, type the Arabic numeral; builds a streak counter
 - **Interactive Pyramid Builder** — drag sliders for base and height; canvas redraws live with area, volume, slant height, and seked
+- **Egyptian Multiplication Trainer** — build the doubling table, tap the rows that sum to the multiplier, and read off the answer; tracks solved count and streak
 - **15 practice problems** (3 per lesson) with instant feedback and "☥ Show me how →" step-by-step solutions
 - **Progress badges** — nav tab lights up when you complete a whole lesson; saved in `localStorage`
 - **Grand Quiz** — 12-question final challenge with an Egyptian rank title at the end

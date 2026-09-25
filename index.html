@@ -1545,12 +1545,12 @@
             <div>
                 <div class="slider-row">
                     <span class="slider-lbl">Base (m)</span>
-                    <input class="pyr-slider" type="range" id="pyrBase" min="2" max="100" value="20" oninput="updatePyramid()">
+                    <input class="pyr-slider" type="range" id="pyrBase" min="2" max="250" value="20" oninput="updatePyramid()">
                     <span class="slider-val" id="pyrBaseVal">20</span>
                 </div>
                 <div class="slider-row">
                     <span class="slider-lbl">Height (m)</span>
-                    <input class="pyr-slider" type="range" id="pyrHeight" min="1" max="100" value="15" oninput="updatePyramid()">
+                    <input class="pyr-slider" type="range" id="pyrHeight" min="1" max="160" value="15" oninput="updatePyramid()">
                     <span class="slider-val" id="pyrHeightVal">15</span>
                 </div>
 
@@ -1571,9 +1571,9 @@
                         <div class="pyr-stat-eq" id="psSlantEq">√(15² + 10²)</div>
                     </div>
                     <div class="pyr-stat">
-                        <div class="pyr-stat-lbl">SEKED (slope)</div>
-                        <div class="pyr-stat-val" id="psSeked">0.67</div>
-                        <div class="pyr-stat-eq" id="psSekedEq">(20/2) ÷ 15</div>
+                        <div class="pyr-stat-lbl">SEKED (palms per cubit)</div>
+                        <div class="pyr-stat-val" id="psSeked">4.67 palms</div>
+                        <div class="pyr-stat-eq" id="psSekedEq">7 × (20/2) ÷ 15</div>
                     </div>
                 </div>
 
@@ -1775,8 +1775,8 @@
             </div>
         </div>
 
-        <div class="emt-problem" id="emtProblem">13 × 7</div>
-        <div class="emt-goal" id="emtGoal">Tap the rows whose <strong>left numbers add up to 13</strong></div>
+        <div class="emt-problem" id="emtProblem">&nbsp;</div>
+        <div class="emt-goal" id="emtGoal">&nbsp;</div>
 
         <div class="emt-table" id="emtTable"></div>
 
@@ -1790,7 +1790,8 @@
 
         <div class="emt-custom">
             <span>Or try your own:</span>
-            <input class="conv-input emt-mini" type="number" id="emtInA" min="2" max="50" placeholder="13">
+            <input class="conv-input emt-mini" type="number" id="emtInA" min="2" max="50" placeholder="13"
+                   onkeydown="if(event.key==='Enter')emtCustom()">
             <span style="font-family:'Cinzel',serif;color:var(--gold);">×</span>
             <input class="conv-input emt-mini" type="number" id="emtInB" min="2" max="99" placeholder="7"
                    onkeydown="if(event.key==='Enter')emtCustom()">
@@ -1988,7 +1989,7 @@ function check(btn, probId, isCorrect) {
         fb.textContent = '✗  ' + rnd(retry);
         fb.className = 'prob-fb show-no';
         btns.forEach(b => {
-            if (b.getAttribute('onclick') && b.getAttribute('onclick').includes(',true)')) {
+            if (/,\s*true\s*\)/.test(b.getAttribute('onclick') || '')) {
                 b.classList.add('reveal');
             }
         });
@@ -2071,7 +2072,7 @@ const QQ = [
       exp:'The common difference is 5. So 19 + 5 = 24.' },
     { cat:'PATTERNS',
       q:'Use Egyptian doubling to find <strong>6 × 8</strong>. Doubling 8: (1→8, 2→16, 4→32). Since 6 = 4 + 2, which values do you add?',
-      opts:['8 + 16 = 24','16 + 32 = 48','8 + 32 = 40','32 + 8 = 40'],
+      opts:['8 + 16 = 24','16 + 32 = 48','8 + 32 = 40','8 + 16 + 32 = 56'],
       ans:1,
       exp:'6 = 4 + 2, so add the row-4 value (32) and row-2 value (16): 32 + 16 = 48. Check: 6 × 8 = 48 ✓' },
     { cat:'PATTERNS',
@@ -2164,7 +2165,7 @@ function showResults() {
     document.getElementById('qbox').style.display = 'none';
     const res = document.getElementById('qresults');
     res.classList.add('show');
-    document.getElementById('qscore').textContent = qScore + '/12';
+    document.getElementById('qscore').textContent = qScore + '/' + QQ.length;
 
     let rank, desc;
     if (qScore <= 3) {
@@ -2316,7 +2317,7 @@ function updatePyramid() {
     const vol    = Math.round((area * height / 3) * 10) / 10;
     const half   = base / 2;
     const slant  = Math.round(Math.sqrt(height * height + half * half) * 10) / 10;
-    const seked  = Math.round(half / height * 100) / 100;
+    const seked  = Math.round(7 * half / height * 100) / 100;  // palms of run per cubit (7 palms) of rise
 
     document.getElementById('psArea').textContent    = area.toLocaleString() + ' m²';
     document.getElementById('psAreaEq').textContent  = base + ' × ' + base;
@@ -2324,8 +2325,8 @@ function updatePyramid() {
     document.getElementById('psVolEq').textContent   = '⅓ × ' + area.toLocaleString() + ' × ' + height;
     document.getElementById('psSlant').textContent   = slant + ' m';
     document.getElementById('psSlantEq').textContent = '√(' + height + '² + ' + half + '²)';
-    document.getElementById('psSeked').textContent   = seked;
-    document.getElementById('psSekedEq').textContent = '(' + base + '/2) ÷ ' + height;
+    document.getElementById('psSeked').textContent   = seked + ' palms';
+    document.getElementById('psSekedEq').textContent = '7 × (' + base + '/2) ÷ ' + height;
 
     drawPyramidCanvas(base, height);
 }
@@ -2471,19 +2472,20 @@ function drawPyramidCanvas(base, height) {
 updatePyramid();
 
 /* ============================================================ MULTIPLICATION TRAINER */
-let emtA = 13, emtB = 7, emtRows = [], emtSel = new Set();
-let emtDone = false, emtRevealed = false;
+let emtA, emtB, emtRows = [], emtSel = new Set();
+let emtDone = false, emtScored = false;
 let emtSolvedCount = 0, emtStreakCount = 0;
 
-function emtBuild(a, b) {
-    emtA = a; emtB = b;
-    emtSel = new Set(); emtDone = false; emtRevealed = false;
+function emtBuild(a, b, scored) {
+    emtA = a; emtB = b; emtScored = scored;
+    emtSel = new Set(); emtDone = false;
     emtRows = [];
     let p = 1, v = b;
     while (p <= a) { emtRows.push([p, v]); p *= 2; v *= 2; }
     document.getElementById('emtProblem').textContent = a + ' × ' + b;
     document.getElementById('emtGoal').innerHTML =
-        'Tap the rows whose <strong>left numbers add up to ' + a + '</strong>';
+        'Tap the rows whose <strong>left numbers add up to ' + a + '</strong>' +
+        (scored ? '' : ' <em>(practice — not scored)</em>');
     document.getElementById('emtTable').innerHTML = emtRows.map((r, i) =>
         `<div class="emt-row" id="emt-row-${i}" onclick="emtToggle(${i})">` +
         `<span>${r[0]}</span><span class="emt-arrow">→</span><span>${r[1]}</span></div>`
@@ -2493,11 +2495,30 @@ function emtBuild(a, b) {
     fb.textContent = ''; fb.className = 'hq-fb';
 }
 
+function emtResetStreak() {
+    emtStreakCount = 0;
+    document.getElementById('emtStreak').textContent = 0;
+}
+
+// Leaving a scored problem unsolved breaks the streak, like Skip in the speed quiz
+function emtAbandon() {
+    if (emtScored && !emtDone) emtResetStreak();
+}
+
 function emtToggle(i) {
     if (emtDone) return;
     if (emtSel.has(i)) emtSel.delete(i); else emtSel.add(i);
     document.getElementById('emt-row-' + i).classList.toggle('sel');
     emtUpdate();
+}
+
+function emtSums() {
+    const sel = [...emtSel].sort((x, y) => x - y);
+    const lhs = sel.map(i => emtRows[i][0]);
+    const rhs = sel.map(i => emtRows[i][1]);
+    return { lhs, rhs,
+             lSum: lhs.reduce((s, n) => s + n, 0),
+             rSum: rhs.reduce((s, n) => s + n, 0) };
 }
 
 function emtUpdate() {
@@ -2508,19 +2529,15 @@ function emtUpdate() {
         fb.textContent = ''; fb.className = 'hq-fb';
         return;
     }
-    const sel  = [...emtSel].sort((x, y) => emtRows[x][0] - emtRows[y][0]);
-    const lhs  = sel.map(i => emtRows[i][0]);
-    const rhs  = sel.map(i => emtRows[i][1]);
-    const lSum = lhs.reduce((s, n) => s + n, 0);
+    const { lhs, rhs, lSum, rSum } = emtSums();
     if (lSum === emtA) {
-        const answer = rhs.reduce((s, n) => s + n, 0);
         tally.innerHTML = lhs.join(' + ') + ' = <strong style="color:var(--bright-gold)">' + emtA + '</strong> ✓';
         fb.innerHTML = '𓂀 &nbsp;Now add the right column: ' + rhs.join(' + ') +
-            ' = <strong>' + answer + '</strong> &nbsp;— so ' + emtA + ' × ' + emtB +
-            ' = <strong>' + answer + '</strong>. The scribes salute you!';
+            ' = <strong>' + rSum + '</strong> &nbsp;— so ' + emtA + ' × ' + emtB +
+            ' = <strong>' + rSum + '</strong>. The scribes salute you!';
         fb.className = 'hq-fb hq-ok';
         emtDone = true;
-        if (!emtRevealed) {
+        if (emtScored) {
             emtSolvedCount++; emtStreakCount++;
             document.getElementById('emtSolved').textContent = emtSolvedCount;
             document.getElementById('emtStreak').textContent = emtStreakCount;
@@ -2536,9 +2553,8 @@ function emtUpdate() {
 
 function emtReveal() {
     if (emtDone) return;
-    emtRevealed = true;
-    emtStreakCount = 0;
-    document.getElementById('emtStreak').textContent = 0;
+    emtAbandon();
+    emtDone = true;
     emtSel = new Set();
     document.querySelectorAll('.emt-row.sel').forEach(el => el.classList.remove('sel'));
     // Greedy from the largest row — works because rows are the binary decomposition
@@ -2550,29 +2566,41 @@ function emtReveal() {
             document.getElementById('emt-row-' + i).classList.add('sel');
         }
     }
-    emtUpdate();
+    const { lhs, rhs, rSum } = emtSums();
+    document.getElementById('emtTally').textContent = lhs.join(' + ') + ' = ' + emtA;
+    const fb = document.getElementById('emtFb');
+    fb.innerHTML = '⟶ &nbsp;Revealed — add the right column: ' + rhs.join(' + ') +
+        ' = <strong>' + rSum + '</strong>, so ' + emtA + ' × ' + emtB + ' = <strong>' + rSum + '</strong>.';
+    fb.className = 'hq-fb hq-no';
 }
 
 function emtRandom() {
-    const a = 5 + Math.floor(Math.random() * 26);  // 5–30
-    const b = 3 + Math.floor(Math.random() * 23);  // 3–25
-    emtBuild(a, b);
+    emtAbandon();
+    let a, b;
+    do {
+        a = 5 + Math.floor(Math.random() * 26);  // 5–30
+        b = 3 + Math.floor(Math.random() * 23);  // 3–25
+    // Powers of two are a single tap, and repeating the current problem looks like a dead button
+    } while ((a & (a - 1)) === 0 || (a === emtA && b === emtB));
+    emtBuild(a, b, true);
 }
 
 function emtCustom() {
-    const a = parseInt(document.getElementById('emtInA').value, 10);
-    const b = parseInt(document.getElementById('emtInB').value, 10);
-    const fb = document.getElementById('emtFb');
-    if (!a || !b || a < 2 || a > 50 || b < 2 || b > 99) {
-        fb.textContent = 'Enter a multiplier from 2–50 and a number from 2–99.';
+    const a = Number(document.getElementById('emtInA').value);
+    const b = Number(document.getElementById('emtInB').value);
+    if (!Number.isInteger(a) || !Number.isInteger(b) || a < 2 || a > 50 || b < 2 || b > 99) {
+        const fb = document.getElementById('emtFb');
+        fb.textContent = 'Enter a whole-number multiplier from 2–50 and a number from 2–99.';
         fb.className = 'hq-fb hq-no';
         return;
     }
-    emtBuild(a, b);
+    emtAbandon();
+    // Custom problems are practice: otherwise rebuilding 2 × 2 farms the counters
+    emtBuild(a, b, false);
 }
 
-// Build the worked example from the lesson as the starting puzzle
-emtBuild(13, 7);
+// Start on a random problem — 13 × 7 is solved in the worked example just above
+emtRandom();
 
 /* ============================================================ SECTION PROGRESS */
 const SECTION_PROBS = {
