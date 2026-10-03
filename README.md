@@ -32,7 +32,7 @@ Temple of Numbers is a **single-page, zero-dependency** educational website that
 | 📐 **Geometry** | Pyramid formulas (area, volume, seked) | Pyramid Builder |
 | 𓂓 **Algebra** | Rhind Papyrus "aha" problems | — |
 | 🔢 **Patterns** | Doubling sequences | Multiplication Trainer |
-| 🏆 **Grand Quiz** | All topics, 12 questions | Rank title at end |
+| 🏆 **Grand Quiz** | All five topics, 15 questions | Rank title at end |
 
 ### Highlights
 
@@ -41,8 +41,8 @@ Temple of Numbers is a **single-page, zero-dependency** educational website that
 - **Interactive Pyramid Builder** — drag sliders for base and height; canvas redraws live with area, volume, slant height, and seked
 - **Egyptian Multiplication Trainer** — build the doubling table, tap the rows that sum to the multiplier, and read off the answer; tracks solved count and streak
 - **15 practice problems** (3 per lesson) with instant feedback and "☥ Show me how →" step-by-step solutions
-- **Progress badges** — nav tab lights up when you complete a whole lesson; saved in `localStorage`
-- **Grand Quiz** — 12-question final challenge with an Egyptian rank title at the end
+- **Saved progress** — your practice answers and the nav-tab badge (lit once every problem in a lesson is answered) are saved in `localStorage`; a "↺ Reset these problems" button under each lesson's practice lets you try again
+- **Grand Quiz** — 15-question final challenge (3 per lesson) with an Egyptian rank title at the end
 
 ## Tech stack
 
