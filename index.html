@@ -910,6 +910,87 @@
             font-size: .9rem;
         }
 
+        /* ===== EYE OF HORUS EXPLORER ===== */
+        .eoh-pieces {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: .7rem;
+            margin: 1.3rem 0 1.1rem;
+        }
+        .eoh-piece {
+            background: rgba(201,162,39,.06);
+            border: 1px solid var(--dark-gold);
+            border-left: 5px solid var(--seg);
+            border-radius: 3px;
+            padding: .7rem .5rem;
+            color: var(--sand);
+            font-family: 'Crimson Text', 'Noto Sans Egyptian Hieroglyphs', serif;
+            cursor: pointer;
+            text-align: center;
+            transition: all .2s;
+        }
+        .eoh-piece:hover { background: rgba(201,162,39,.16); }
+        .eoh-piece:focus-visible { outline: 2px solid var(--bright-gold); outline-offset: 2px; }
+        .eoh-piece.on {
+            background: rgba(255,215,0,.13);
+            border-color: var(--bright-gold);
+            border-left-color: var(--seg);
+            box-shadow: 0 0 12px rgba(255,215,0,.3);
+        }
+        .eoh-piece .eye-frac { font-size: 1.45rem; }
+        .eoh-piece .eye-name { font-size: .78rem; }
+        .eoh-piece:disabled { cursor: default; opacity: .55; }
+        .eoh-bar {
+            display: flex;
+            height: 38px;
+            border: 2px solid var(--gold);
+            border-radius: 3px;
+            background:
+                repeating-linear-gradient(90deg, transparent 0 calc(12.5% - 1px), rgba(201,162,39,.22) calc(12.5% - 1px) 12.5%),
+                rgba(201,162,39,.05);
+            overflow: hidden;
+        }
+        .eoh-seg {
+            background: var(--seg);
+            border-right: 1px solid rgba(7,7,15,.7);
+            transition: width .35s ease;
+        }
+        .eoh-seg.thoth {
+            background: #fff8d6;
+            box-shadow: 0 0 14px 4px rgba(255,248,214,.9);
+        }
+        .eoh-scale {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            font-family: 'Cinzel', serif;
+            font-size: .7rem;
+            color: var(--dim-gold);
+            margin-top: .25rem;
+            letter-spacing: 1px;
+        }
+        /* pin ½ to the true midpoint of the bar (space-between would center it between the end labels) */
+        .eoh-scale .eoh-half { position: absolute; left: 50%; transform: translateX(-50%); }
+        .eoh-sum {
+            text-align: center;
+            font-size: 1.15rem;
+            color: var(--sand);
+            min-height: 2rem;
+            margin-top: .9rem;
+            line-height: 1.6;
+        }
+        .eoh-goal {
+            text-align: center;
+            font-family: 'Cinzel', serif;
+            color: var(--turquoise);
+            letter-spacing: 1px;
+            min-height: 1.5rem;
+            margin-top: .4rem;
+        }
+        @media (max-width: 600px) {
+            .eoh-pieces { grid-template-columns: repeat(2, 1fr); }
+        }
+
         /* ===== PYRAMID BUILDER ===== */
         .pyr-builder-grid {
             display: grid;
@@ -1358,7 +1439,7 @@
         <h3 class="card-title">Your Five Sacred Lessons</h3>
         <ul class="lesson-list">
             <li role="button" tabindex="0" onclick="show('numbers')"><span class="lnav-icon">𓏤</span><strong>Hieroglyphic Numbers — The Number System</strong><br><span style="color:var(--sand);font-size:.95rem;">Read and write numbers the way scribes did 5,000 years ago — plus an interactive converter</span></li>
-            <li role="button" tabindex="0" onclick="show('fractions')"><span class="lnav-icon">𓂀</span><strong>The Eye of Horus — Fractions</strong><br><span style="color:var(--sand);font-size:.95rem;">The legend of Horus and Set — and the unit fractions Egyptians used for 3,000 years</span></li>
+            <li role="button" tabindex="0" onclick="show('fractions')"><span class="lnav-icon">𓂀</span><strong>The Eye of Horus — Fractions</strong><br><span style="color:var(--sand);font-size:.95rem;">The legend of Horus and Set — rebuild the Eye piece by piece, and learn the unit fractions Egyptians used for 3,000 years</span></li>
             <li role="button" tabindex="0" onclick="show('geometry')"><span class="lnav-icon">△</span><strong>The Pyramids — Geometry</strong><br><span style="color:var(--sand);font-size:.95rem;">Calculate area, perimeter, and volume of Egypt's most iconic structures</span></li>
             <li role="button" tabindex="0" onclick="show('algebra')"><span class="lnav-icon">∞</span><strong>The Nile — Algebra</strong><br><span style="color:var(--sand);font-size:.95rem;">Solve for the unknown "aha" — just like Egyptian scribes 4,000 years ago</span></li>
             <li role="button" tabindex="0" onclick="show('patterns')"><span class="lnav-icon">✦</span><strong>The Stars — Patterns & Sequences</strong><br><span style="color:var(--sand);font-size:.95rem;">Discover the hidden patterns in numbers and Egyptian art</span></li>
@@ -1427,6 +1508,26 @@
             <div class="formula">1/2 + 1/4 + 1/8 + 1/16 + 1/32 + 1/64 = <strong style="color:#FFD700">63/64</strong></div>
             <p style="text-align:center;margin-top:.5rem;color:var(--sand);font-size:.95rem;">The six pieces only sum to <strong>63/64</strong> — not a whole!<br>Legend says Thoth magically supplied the missing <strong>1/64</strong>.</p>
             <p style="text-align:center;margin-top:.5rem;color:var(--sand);font-size:.85rem;font-style:italic;">Historians debate whether the Egyptians themselves linked the Eye to these fractions — but the fractions and the math are real.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3 class="card-title">𓂀 Rebuild the Eye — Fraction Explorer</h3>
+        <p>Help Thoth put the Eye of Horus back together! Tap a piece to hand it to Thoth and watch the bar fill toward <strong>one whole eye</strong>. Tap it again to take it back. Can you make the eye whole?</p>
+
+        <div class="eoh-pieces" id="eohPieces"></div>
+
+        <div class="eoh-bar" id="eohBar" role="img" aria-label="Eye of Horus: 0 of 64 parts restored"></div>
+        <div class="eoh-scale"><span>0</span><span class="eoh-half">½</span><span>1 WHOLE EYE</span></div>
+
+        <div class="eoh-goal" id="eohGoal">&nbsp;</div>
+        <div class="eoh-sum" id="eohSum" aria-live="polite">Tap a piece of the eye to begin.</div>
+        <div class="hq-fb" id="eohFb" role="status"></div>
+
+        <div class="hq-input-row" style="margin-top:1rem;">
+            <button class="conv-btn" style="margin-top:0;" onclick="eohChallenge()">🎯 Challenge Me</button>
+            <button class="hq-skip-btn" onclick="eohClear()">↺ Clear</button>
+            <button class="hq-skip-btn" id="eohThothBtn" onclick="eohThoth()" hidden>☥ Ask Thoth for the last 1/64</button>
         </div>
     </div>
 
@@ -2706,6 +2807,125 @@ function emtCustom() {
 
 // Start on a random problem — 13 × 7 is solved in the worked example just above
 emtRandom();
+
+/* ============================================================ EYE OF HORUS EXPLORER */
+// Denominators are powers of two, so every sum is a whole number of 64ths — and each total has exactly one set of pieces
+const EOH = [
+    { d: 2,  sym: '◑', name: 'Right Side', sense: 'smell',   color: '#FFD700' },
+    { d: 4,  sym: '●', name: 'Pupil',      sense: 'sight',   color: '#2ABFBF' },
+    { d: 8,  sym: '◠', name: 'Eyebrow',    sense: 'thought', color: '#E08A3C' },
+    { d: 16, sym: '◐', name: 'Left Side',  sense: 'hearing', color: '#4F7FD9' },
+    { d: 32, sym: '〜', name: 'Curl',       sense: 'taste',   color: '#B57EDC' },
+    { d: 64, sym: '▽', name: 'Teardrop',   sense: 'touch',   color: '#6FCF7F' },
+];
+let eohOn = new Set(), eohThothGiven = false, eohTarget = 0;
+
+const gcd = (a, b) => b ? gcd(b, a % b) : a;
+function fracText(n64) {
+    if (n64 === 0)  return '0';
+    if (n64 === 64) return '1';
+    const g = gcd(n64, 64);
+    return (n64 / g) + '/' + (64 / g);
+}
+const eohTotal = () => [...eohOn].reduce((s, i) => s + 64 / EOH[i].d, 0);
+
+function eohRender() {
+    const total = eohTotal();
+    const order = [...eohOn].sort((a, b) => a - b);   // biggest piece first so the bar fills left to right
+
+    document.querySelectorAll('.eoh-piece').forEach((btn, i) => {
+        btn.classList.toggle('on', eohOn.has(i));
+        btn.setAttribute('aria-pressed', eohOn.has(i));
+        btn.disabled = eohThothGiven;
+    });
+
+    const bar = document.getElementById('eohBar');
+    bar.innerHTML = order.map(i =>
+        `<div class="eoh-seg" style="--seg:${EOH[i].color};width:${100 / EOH[i].d}%"></div>`).join('') +
+        (eohThothGiven ? '<div class="eoh-seg thoth" style="width:1.5625%"></div>' : '');
+    const parts = total + (eohThothGiven ? 1 : 0);
+    bar.setAttribute('aria-label', `Eye of Horus: ${parts} of 64 parts restored`);
+
+    // Show the working: add the unit fractions by rewriting each over 64
+    const sum = document.getElementById('eohSum');
+    if (order.length === 0) {
+        sum.textContent = 'Tap a piece of the eye to begin.';
+    } else {
+        const unit = order.map(i => '1/' + EOH[i].d).join(' + ');
+        const as64 = order.map(i => (64 / EOH[i].d) + '/64').join(' + ');
+        let html = unit;
+        if (order.length > 1) html += ' &nbsp;=&nbsp; ' + as64;
+        html += ' &nbsp;=&nbsp; <strong>' + total + '/64</strong>';
+        if (fracText(total) !== total + '/64') html += ' &nbsp;=&nbsp; <strong style="color:var(--bright-gold)">' + fracText(total) + '</strong>';
+        if (eohThothGiven) html += '<br>63/64 + Thoth\'s 1/64 &nbsp;=&nbsp; <strong style="color:var(--bright-gold)">64/64 = 1 whole eye ☥</strong>';
+        sum.innerHTML = html;
+    }
+
+    const fb = document.getElementById('eohFb');
+    const thothBtn = document.getElementById('eohThothBtn');
+    thothBtn.hidden = !(total === 63 && !eohThothGiven && !eohTarget);
+
+    if (eohTarget) {
+        if (total === eohTarget) {
+            fb.innerHTML = '𓂀 &nbsp;Exactly ' + fracText(eohTarget) + '! The scribes salute you. Press <em>Challenge Me</em> for another.';
+            fb.className = 'hq-fb hq-ok';
+        } else if (total > eohTarget) {
+            fb.textContent = 'Too much — that\'s ' + fracText(total) + ', more than ' + fracText(eohTarget) + '. Hand a piece back.';
+            fb.className = 'hq-fb hq-no';
+        } else {
+            fb.textContent = order.length ? 'Keep going — you still need ' + fracText(eohTarget - total) + ' more.' : '';
+            fb.className = 'hq-fb';
+        }
+    } else if (eohThothGiven) {
+        fb.innerHTML = '☥ &nbsp;With Thoth\'s magic, the Eye of Horus is whole again!';
+        fb.className = 'hq-fb hq-ok';
+    } else if (total === 63) {
+        fb.innerHTML = 'All six pieces — but the eye is still <strong>1/64 short</strong>! Only Thoth\'s magic can finish it.';
+        fb.className = 'hq-fb hq-no';
+    } else {
+        fb.textContent = ''; fb.className = 'hq-fb';
+    }
+}
+
+function eohToggle(i) {
+    if (eohThothGiven) return;
+    if (eohOn.has(i)) eohOn.delete(i); else eohOn.add(i);
+    eohRender();
+}
+
+function eohThoth() {
+    if (eohTotal() !== 63) return;
+    eohThothGiven = true;
+    eohRender();
+}
+
+function eohClear() {
+    eohOn = new Set(); eohThothGiven = false; eohTarget = 0;
+    document.getElementById('eohGoal').innerHTML = '&nbsp;';
+    eohRender();
+}
+
+// A target is a random set of 2–4 pieces, so there is always exactly one way to build it
+function eohChallenge() {
+    let target;
+    do {
+        target = 0; let count = 0;
+        EOH.forEach(p => { if (Math.random() < .5) { target += 64 / p.d; count++; } });
+        if (count < 2 || count > 4) target = 0;
+    } while (!target || target === eohTarget);
+    eohOn = new Set(); eohThothGiven = false;
+    eohTarget = target;
+    document.getElementById('eohGoal').textContent = '🎯 Give Thoth exactly ' + fracText(target) + ' of the eye';
+    eohRender();
+}
+
+(function eohBuild() {
+    document.getElementById('eohPieces').innerHTML = EOH.map((p, i) =>
+        `<button type="button" class="eoh-piece" style="--seg:${p.color}" aria-pressed="false" onclick="eohToggle(${i})">` +
+        `<span class="eye-sym" aria-hidden="true">${p.sym}</span><div class="eye-frac">1/${p.d}</div>` +
+        `<div class="eye-name">${p.name} — ${p.sense}</div></button>`).join('');
+    eohRender();
+})();
 
 /* ============================================================ SECTION PROGRESS */
 const SECTION_PROBS = {
