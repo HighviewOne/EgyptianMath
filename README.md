@@ -43,6 +43,7 @@ Temple of Numbers is a **single-page, zero-dependency** educational website that
 - **15 practice problems** (3 per lesson) with instant feedback and "☥ Show me how →" step-by-step solutions
 - **Saved progress** — your practice answers and the nav-tab badge (lit once every problem in a lesson is answered) are saved in `localStorage`; a "↺ Reset these problems" button under each lesson's practice lets you try again
 - **Grand Quiz** — 15-question final challenge (3 per lesson) with an Egyptian rank title at the end
+- **Accessible** — feedback is announced to screen readers, text meets WCAG contrast, and animations stop when the device's *reduce motion* setting is on (the starfield also pauses whenever it's scrolled off-screen)
 
 ## Tech stack
 
@@ -51,7 +52,7 @@ Temple of Numbers is a **single-page, zero-dependency** educational website that
 | Structure | HTML5 |
 | Style | CSS3 (custom properties, grid, canvas) |
 | Logic | Vanilla JavaScript (ES2020) |
-| Fonts | Cinzel + Crimson Text via Google Fonts |
+| Fonts | Cinzel + Crimson Text + Noto Sans Egyptian Hieroglyphs via Google Fonts (so hieroglyphs render on every device) |
 | Deploy | GitHub Pages (main branch root) |
 
 No frameworks. No build step. No Node. The whole site is one file: [`index.html`](index.html).

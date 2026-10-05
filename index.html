@@ -4,12 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Temple of Numbers — Egyptian Math</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Noto Sans Egyptian Hieroglyphs: many devices have no font for 𓏤𓎆𓍢… and would show empty boxes -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Noto+Sans+Egyptian+Hieroglyphs&display=swap" rel="stylesheet">
     <style>
         :root {
             --gold:       #C9A227;
             --bright-gold:#FFD700;
             --dark-gold:  #7A5C10;
+            --dim-gold:   #A88630;   /* dark-gold is for borders; this passes 4.5:1 for text */
             --sand:       #F2E8C9;
             --deep-sand:  #DDD0A8;
             --night:      #07070F;
@@ -25,7 +29,7 @@
         html { scroll-behavior: smooth; }
 
         body {
-            font-family: 'Crimson Text', Georgia, serif;
+            font-family: 'Crimson Text', 'Noto Sans Egyptian Hieroglyphs', Georgia, serif;
             background: var(--night);
             color: var(--light-text);
             font-size: 18px;
@@ -115,7 +119,7 @@
         }
 
         .eyebrow {
-            font-family: 'Cinzel', serif;
+            font-family: 'Cinzel', 'Noto Sans Egyptian Hieroglyphs', serif;
             font-size: .85rem;
             letter-spacing: 8px;
             color: var(--turquoise);
@@ -126,12 +130,12 @@
         .hiero-row {
             font-size: 1.8rem;
             letter-spacing: .8rem;
-            color: var(--dark-gold);
+            color: var(--dim-gold);
             margin-bottom: .8rem;
         }
 
         .hero-title {
-            font-family: 'Cinzel', serif;
+            font-family: 'Cinzel', 'Noto Sans Egyptian Hieroglyphs', serif;
             font-size: clamp(2.8rem,9vw,6.5rem);
             font-weight: 900;
             color: var(--bright-gold);
@@ -141,7 +145,7 @@
         }
 
         .hero-sub {
-            font-family: 'Cinzel', serif;
+            font-family: 'Cinzel', 'Noto Sans Egyptian Hieroglyphs', serif;
             font-size: clamp(.9rem,2.5vw,1.35rem);
             color: var(--sand);
             letter-spacing: 2px;
@@ -161,7 +165,7 @@
             padding: .9rem 3rem;
             background: linear-gradient(135deg,var(--dark-gold),var(--gold),var(--dark-gold));
             color: var(--night);
-            font-family: 'Cinzel', serif;
+            font-family: 'Cinzel', 'Noto Sans Egyptian Hieroglyphs', serif;
             font-size: 1rem;
             font-weight: 700;
             letter-spacing: 3px;
@@ -182,7 +186,7 @@
             left: 50%;
             transform: translateX(-50%);
             z-index: 10;
-            font-family: 'Cinzel', serif;
+            font-family: 'Cinzel', 'Noto Sans Egyptian Hieroglyphs', serif;
             font-size: .75rem;
             letter-spacing: 4px;
             color: var(--deep-sand);
@@ -214,7 +218,7 @@
             border: none;
             border-bottom: 3px solid transparent;
             color: var(--sand);
-            font-family: 'Cinzel', serif;
+            font-family: 'Cinzel', 'Noto Sans Egyptian Hieroglyphs', serif;
             font-size: .8rem;
             letter-spacing: 1px;
             cursor: pointer;
@@ -246,7 +250,7 @@
             margin-bottom: .6rem;
         }
         .sec-title {
-            font-family: 'Cinzel', serif;
+            font-family: 'Cinzel', 'Noto Sans Egyptian Hieroglyphs', serif;
             font-size: clamp(1.7rem,4vw,2.8rem);
             color: var(--bright-gold);
             margin-bottom: .3rem;
@@ -276,7 +280,7 @@
         }
 
         .card-title {
-            font-family: 'Cinzel', serif;
+            font-family: 'Cinzel', 'Noto Sans Egyptian Hieroglyphs', serif;
             font-size: 1.35rem;
             color: var(--gold);
             margin-bottom: .9rem;
@@ -291,7 +295,7 @@
             border-radius: 0 3px 3px 0;
         }
         .myth-label {
-            font-family: 'Cinzel', serif;
+            font-family: 'Cinzel', 'Noto Sans Egyptian Hieroglyphs', serif;
             font-size: .75rem;
             color: var(--turquoise);
             letter-spacing: 3px;
@@ -308,7 +312,7 @@
             margin: 1.3rem 0;
         }
         .math-label {
-            font-family: 'Cinzel', serif;
+            font-family: 'Cinzel', 'Noto Sans Egyptian Hieroglyphs', serif;
             font-size: .7rem;
             color: var(--gold);
             letter-spacing: 3px;
@@ -316,7 +320,7 @@
             display: block;
         }
         .formula {
-            font-family: 'Crimson Text', Georgia, serif;
+            font-family: 'Crimson Text', 'Noto Sans Egyptian Hieroglyphs', Georgia, serif;
             font-size: 1.45rem;
             color: var(--bright-gold);
             text-align: center;
@@ -344,7 +348,7 @@
             text-align: center;
         }
         .fact-num {
-            font-family: 'Cinzel', serif;
+            font-family: 'Cinzel', 'Noto Sans Egyptian Hieroglyphs', serif;
             font-size: 1.9rem;
             color: var(--bright-gold);
         }
@@ -382,7 +386,7 @@
             box-shadow: 0 4px 18px rgba(201,162,39,.25);
         }
         .eye-frac {
-            font-family: 'Cinzel', serif;
+            font-family: 'Cinzel', 'Noto Sans Egyptian Hieroglyphs', serif;
             font-size: 1.7rem;
             font-weight: 700;
             color: var(--bright-gold);
@@ -415,7 +419,7 @@
         }
         .god-icon { font-size: 4.5rem; display: block; }
         .god-name-txt {
-            font-family: 'Cinzel', serif;
+            font-family: 'Cinzel', 'Noto Sans Egyptian Hieroglyphs', serif;
             color: var(--gold);
             font-size: 1.15rem;
             margin-top: .4rem;
@@ -440,7 +444,7 @@
 
         /* ===== PRACTICE ===== */
         .practice-head {
-            font-family: 'Cinzel', serif;
+            font-family: 'Cinzel', 'Noto Sans Egyptian Hieroglyphs', serif;
             color: var(--turquoise);
             font-size: 1rem;
             letter-spacing: 2px;
@@ -466,7 +470,7 @@
             background: rgba(201,162,39,.08);
             border: 1px solid var(--dark-gold);
             color: var(--sand);
-            font-family: 'Crimson Text', serif;
+            font-family: 'Crimson Text', 'Noto Sans Egyptian Hieroglyphs', serif;
             font-size: 1rem;
             cursor: pointer;
             border-radius: 2px;
@@ -522,7 +526,7 @@
         }
 
         .q-num {
-            font-family: 'Cinzel', serif;
+            font-family: 'Cinzel', 'Noto Sans Egyptian Hieroglyphs', serif;
             font-size: .8rem;
             color: var(--turquoise);
             letter-spacing: 3px;
@@ -536,7 +540,7 @@
             font-size: .75rem;
             color: var(--gold);
             letter-spacing: 2px;
-            font-family: 'Cinzel', serif;
+            font-family: 'Cinzel', 'Noto Sans Egyptian Hieroglyphs', serif;
             margin-bottom: 1.3rem;
             border-radius: 2px;
         }
@@ -552,7 +556,7 @@
             background: rgba(201,162,39,.07);
             border: 1px solid var(--dark-gold);
             color: var(--sand);
-            font-family: 'Crimson Text', serif;
+            font-family: 'Crimson Text', 'Noto Sans Egyptian Hieroglyphs', serif;
             font-size: 1.05rem;
             cursor: pointer;
             border-radius: 2px;
@@ -573,7 +577,7 @@
         .q-opt.reveal-ok { background:rgba(0,80,0,.15);  border-color:rgba(0,160,0,.5); color:#88ff88; }
 
         .opt-ltr {
-            font-family: 'Cinzel', serif;
+            font-family: 'Cinzel', 'Noto Sans Egyptian Hieroglyphs', serif;
             font-size: .85rem;
             color: var(--gold);
             font-weight: 700;
@@ -597,7 +601,7 @@
             background: linear-gradient(135deg,var(--dark-gold),var(--gold));
             border: none;
             color: var(--night);
-            font-family: 'Cinzel', serif;
+            font-family: 'Cinzel', 'Noto Sans Egyptian Hieroglyphs', serif;
             font-size: .95rem;
             font-weight: 700;
             letter-spacing: 2px;
@@ -619,13 +623,13 @@
         .results.show { display: block; }
 
         .res-title {
-            font-family: 'Cinzel', serif;
+            font-family: 'Cinzel', 'Noto Sans Egyptian Hieroglyphs', serif;
             font-size: clamp(1.4rem,4vw,2.3rem);
             color: var(--bright-gold);
             margin-bottom: .8rem;
         }
         .score-big {
-            font-family: 'Cinzel', serif;
+            font-family: 'Cinzel', 'Noto Sans Egyptian Hieroglyphs', serif;
             font-size: 4.5rem;
             color: var(--bright-gold);
             text-shadow: 0 0 30px rgba(255,215,0,.6);
@@ -635,12 +639,12 @@
             display: inline-block;
             padding: .8rem 2rem;
             border: 2px solid var(--gold);
-            font-family: 'Cinzel', serif;
+            font-family: 'Cinzel', 'Noto Sans Egyptian Hieroglyphs', serif;
             font-size: 1.2rem;
             color: var(--bright-gold);
             margin: .9rem 0;
         }
-        .rank-badge::before, .rank-badge::after { content:'☥'; margin:0 .7rem; color:var(--dark-gold); }
+        .rank-badge::before, .rank-badge::after { content:'☥'; margin:0 .7rem; color:var(--dim-gold); }
         .rank-desc {
             font-size: 1.05rem;
             color: var(--sand);
@@ -652,7 +656,7 @@
             background: linear-gradient(135deg,rgba(27,63,138,.4),rgba(42,191,191,.25));
             border: 1px solid var(--turquoise);
             color: var(--turquoise);
-            font-family: 'Cinzel', serif;
+            font-family: 'Cinzel', 'Noto Sans Egyptian Hieroglyphs', serif;
             font-size: .95rem;
             cursor: pointer;
             letter-spacing: 2px;
@@ -667,10 +671,10 @@
             border-top: 1px solid var(--dark-gold);
             text-align: center;
             padding: 1.8rem;
-            color: rgba(242,232,201,.45);
+            color: rgba(242,232,201,.7);
             font-size: .88rem;
         }
-        .footer-ankh { font-size:1.3rem; color:var(--dark-gold); margin:.3rem; }
+        .footer-ankh { font-size:1.3rem; color:var(--dim-gold); margin:.3rem; }
 
         /* ===== SCROLL BAR ===== */
         ::-webkit-scrollbar { width: 7px; }
@@ -703,7 +707,7 @@
             color: var(--bright-gold);
         }
         .hiero-value {
-            font-family: 'Cinzel', serif;
+            font-family: 'Cinzel', 'Noto Sans Egyptian Hieroglyphs', serif;
             font-size: 1.1rem;
             color: var(--gold);
             margin: .3rem 0 .1rem;
@@ -728,7 +732,7 @@
             border: 2px solid var(--dark-gold);
             border-radius: 2px;
             color: var(--bright-gold);
-            font-family: 'Cinzel', serif;
+            font-family: 'Cinzel', 'Noto Sans Egyptian Hieroglyphs', serif;
             font-size: 1.4rem;
             text-align: center;
             outline: none;
@@ -756,7 +760,7 @@
             background: linear-gradient(135deg, var(--dark-gold), var(--gold));
             border: none;
             color: var(--night);
-            font-family: 'Cinzel', serif;
+            font-family: 'Cinzel', 'Noto Sans Egyptian Hieroglyphs', serif;
             font-size: .9rem;
             font-weight: 700;
             cursor: pointer;
@@ -776,13 +780,13 @@
         }
         .hq-score-item { text-align: center; }
         .hq-score-num {
-            font-family: 'Cinzel', serif;
+            font-family: 'Cinzel', 'Noto Sans Egyptian Hieroglyphs', serif;
             font-size: 2rem;
             color: var(--bright-gold);
             line-height: 1.1;
         }
         .hq-score-lbl {
-            font-family: 'Cinzel', serif;
+            font-family: 'Cinzel', 'Noto Sans Egyptian Hieroglyphs', serif;
             font-size: .68rem;
             color: var(--turquoise);
             letter-spacing: 2px;
@@ -826,8 +830,8 @@
             padding: .55rem 1.2rem;
             background: transparent;
             border: 1px solid rgba(201,162,39,.4);
-            color: rgba(201,162,39,.6);
-            font-family: 'Cinzel', serif;
+            color: rgba(201,162,39,.85);
+            font-family: 'Cinzel', 'Noto Sans Egyptian Hieroglyphs', serif;
             font-size: .75rem;
             cursor: pointer;
             border-radius: 2px;
@@ -838,7 +842,7 @@
 
         /* ===== EGYPTIAN MULTIPLICATION TRAINER ===== */
         .emt-problem {
-            font-family: 'Cinzel', serif;
+            font-family: 'Cinzel', 'Noto Sans Egyptian Hieroglyphs', serif;
             font-size: clamp(1.8rem, 5vw, 2.6rem);
             color: var(--bright-gold);
             text-align: center;
@@ -864,7 +868,7 @@
             border-radius: 3px;
             width: 100%;
             cursor: pointer;
-            font-family: 'Cinzel', serif;
+            font-family: 'Cinzel', 'Noto Sans Egyptian Hieroglyphs', serif;
             font-size: 1.15rem;
             color: var(--sand);
             transition: all .15s;
@@ -921,7 +925,7 @@
             margin: .85rem 0;
         }
         .slider-lbl {
-            font-family: 'Cinzel', serif;
+            font-family: 'Cinzel', 'Noto Sans Egyptian Hieroglyphs', serif;
             font-size: .78rem;
             color: var(--gold);
             min-width: 72px;
@@ -952,7 +956,7 @@
             cursor: pointer;
         }
         .slider-val {
-            font-family: 'Cinzel', serif;
+            font-family: 'Cinzel', 'Noto Sans Egyptian Hieroglyphs', serif;
             font-size: 1rem;
             color: var(--bright-gold);
             min-width: 52px;
@@ -972,14 +976,14 @@
             text-align: center;
         }
         .pyr-stat-lbl {
-            font-family: 'Cinzel', serif;
+            font-family: 'Cinzel', 'Noto Sans Egyptian Hieroglyphs', serif;
             font-size: .62rem;
             color: var(--turquoise);
             letter-spacing: 2px;
             margin-bottom: .3rem;
         }
         .pyr-stat-val {
-            font-family: 'Cinzel', serif;
+            font-family: 'Cinzel', 'Noto Sans Egyptian Hieroglyphs', serif;
             font-size: 1.2rem;
             color: var(--bright-gold);
         }
@@ -1001,7 +1005,7 @@
             background: rgba(201,162,39,.08);
             border: 1px solid rgba(201,162,39,.38);
             color: var(--gold);
-            font-family: 'Cinzel', serif;
+            font-family: 'Cinzel', 'Noto Sans Egyptian Hieroglyphs', serif;
             font-size: .75rem;
             letter-spacing: 1px;
             cursor: pointer;
@@ -1027,7 +1031,7 @@
             to   { opacity:1; transform:translateY(0); }
         }
         .sol-title {
-            font-family: 'Cinzel', serif;
+            font-family: 'Cinzel', 'Noto Sans Egyptian Hieroglyphs', serif;
             font-size: .68rem;
             color: var(--turquoise);
             letter-spacing: 3px;
@@ -1045,9 +1049,9 @@
         }
         .sol-step:last-child { border-bottom: none; }
         .sol-num {
-            font-family: 'Cinzel', serif;
+            font-family: 'Cinzel', 'Noto Sans Egyptian Hieroglyphs', serif;
             font-size: .68rem;
-            color: var(--dark-gold);
+            color: var(--dim-gold);
             min-width: 16px;
             font-weight: 700;
             padding-top: 2px;
@@ -1075,6 +1079,16 @@
             width: 14px;
             margin-left: .4rem;
             box-shadow: 0 0 6px rgba(0,204,68,.6);
+        }
+
+        /* ===== REDUCED MOTION ===== */
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            *, *::before, *::after {
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: .01ms !important;
+            }
         }
 
         /* ===== RESPONSIVE ===== */
@@ -1114,9 +1128,9 @@
 </section>
 
 <!-- ============================================================ NAV -->
-<nav class="main-nav" id="mainNav">
+<nav class="main-nav" id="mainNav" aria-label="Lessons">
     <div class="nav-inner">
-        <button class="nav-btn active" data-sec="intro"    onclick="show('intro')">☥ Introduction</button>
+        <button class="nav-btn active" data-sec="intro"    onclick="show('intro')" aria-current="page">☥ Introduction</button>
         <button class="nav-btn"        data-sec="numbers"   onclick="show('numbers')">𓏤 Numbers</button>
         <button class="nav-btn"        data-sec="fractions" onclick="show('fractions')">𓂀 Fractions</button>
         <button class="nav-btn"        data-sec="geometry"  onclick="show('geometry')">△ Geometry</button>
@@ -1199,7 +1213,7 @@
         <div class="converter-box">
             <input class="conv-input" type="number" id="convInput" min="1" max="999999" value="10" placeholder="e.g. 42" oninput="convertNum()">
             <div class="conv-result" id="convResult">𓎆</div>
-            <div class="conv-hint" id="convHint">= 10 &nbsp;·&nbsp; Try typing your age, your birth year, or the Great Pyramid's height (146)!</div>
+            <div class="conv-hint" id="convHint" aria-live="polite">= 10 &nbsp;·&nbsp; Try typing your age, your birth year, or the Great Pyramid's height (146)!</div>
             <button class="conv-btn" onclick="randomNum()">⚄ Random Number</button>
         </div>
     </div>
@@ -1233,7 +1247,7 @@
                 <button class="conv-btn" onclick="submitHQ()">Check ✓</button>
                 <button class="hq-skip-btn" onclick="skipHQ()">Skip →</button>
             </div>
-            <div class="hq-fb" id="hqFb"></div>
+            <div class="hq-fb" id="hqFb" role="status"></div>
         </div>
     </div>
 
@@ -1249,7 +1263,7 @@
                 <button class="opt" onclick="check(this,'np1',false)">C) &nbsp;32,570</button>
                 <button class="opt" onclick="check(this,'np1',false)">D) &nbsp;30,257</button>
             </div>
-            <div class="prob-fb" id="fb-np1"></div>
+            <div class="prob-fb" id="fb-np1" role="status"></div>
         </div>
 
         <div class="prob" id="np2">
@@ -1260,7 +1274,7 @@
                 <button class="opt" onclick="check(this,'np2',false)">C) &nbsp;𓆼𓆼𓎆𓎆𓏤𓏤𓏤𓏤</button>
                 <button class="opt" onclick="check(this,'np2',false)">D) &nbsp;𓆼𓍢𓎆𓎆𓎆𓎆𓏤𓏤𓏤𓏤</button>
             </div>
-            <div class="prob-fb" id="fb-np2"></div>
+            <div class="prob-fb" id="fb-np2" role="status"></div>
         </div>
 
         <div class="prob" id="np3">
@@ -1271,7 +1285,7 @@
                 <button class="opt" onclick="check(this,'np3',false)">C) &nbsp;36 lotus, 5 heel bones</button>
                 <button class="opt" onclick="check(this,'np3',false)">D) &nbsp;3 lotus, 5 ropes</button>
             </div>
-            <div class="prob-fb" id="fb-np3"></div>
+            <div class="prob-fb" id="fb-np3" role="status"></div>
         </div>
 
         <div style="margin-top:1.5rem;text-align:right;">
@@ -1435,7 +1449,7 @@
                 <button class="opt" onclick="check(this,'fp1',false)">C) &nbsp;2/6</button>
                 <button class="opt" onclick="check(this,'fp1',false)">D) &nbsp;1/8</button>
             </div>
-            <div class="prob-fb" id="fb-fp1"></div>
+            <div class="prob-fb" id="fb-fp1" role="status"></div>
         </div>
 
         <div class="prob" id="fp2">
@@ -1446,7 +1460,7 @@
                 <button class="opt" onclick="check(this,'fp2',true )">C) &nbsp;5/8</button>
                 <button class="opt" onclick="check(this,'fp2',false)">D) &nbsp;3/8</button>
             </div>
-            <div class="prob-fb" id="fb-fp2"></div>
+            <div class="prob-fb" id="fb-fp2" role="status"></div>
         </div>
 
         <div class="prob" id="fp3">
@@ -1457,7 +1471,7 @@
                 <button class="opt" onclick="check(this,'fp3',false)">C) &nbsp;1/3 + 1/3 + 1/12</button>
                 <button class="opt" onclick="check(this,'fp3',false)">D) &nbsp;1/2 + 1/6</button>
             </div>
-            <div class="prob-fb" id="fb-fp3"></div>
+            <div class="prob-fb" id="fb-fp3" role="status"></div>
         </div>
 
         <div style="margin-top:1.5rem;text-align:right;">
@@ -1598,7 +1612,7 @@
                 <button class="opt" onclick="check(this,'gp1',false)">C) &nbsp;1,296 m³</button>
                 <button class="opt" onclick="check(this,'gp1',false)">D) &nbsp;144 m³</button>
             </div>
-            <div class="prob-fb" id="fb-gp1"></div>
+            <div class="prob-fb" id="fb-gp1" role="status"></div>
         </div>
 
         <div class="prob" id="gp2">
@@ -1609,7 +1623,7 @@
                 <button class="opt" onclick="check(this,'gp2',true )">C) &nbsp;5 cubits</button>
                 <button class="opt" onclick="check(this,'gp2',false)">D) &nbsp;6 cubits</button>
             </div>
-            <div class="prob-fb" id="fb-gp2"></div>
+            <div class="prob-fb" id="fb-gp2" role="status"></div>
         </div>
 
         <div class="prob" id="gp3">
@@ -1620,7 +1634,7 @@
                 <button class="opt" onclick="check(this,'gp3',false)">C) &nbsp;35 m²</button>
                 <button class="opt" onclick="check(this,'gp3',false)">D) &nbsp;28 m²</button>
             </div>
-            <div class="prob-fb" id="fb-gp3"></div>
+            <div class="prob-fb" id="fb-gp3" role="status"></div>
         </div>
 
         <div style="margin-top:1.5rem;text-align:right;">
@@ -1700,7 +1714,7 @@
                 <button class="opt" onclick="check(this,'ap1',true )">C) &nbsp;60</button>
                 <button class="opt" onclick="check(this,'ap1',false)">D) &nbsp;11</button>
             </div>
-            <div class="prob-fb" id="fb-ap1"></div>
+            <div class="prob-fb" id="fb-ap1" role="status"></div>
         </div>
 
         <div class="prob" id="ap2">
@@ -1711,7 +1725,7 @@
                 <button class="opt" onclick="check(this,'ap2',false)">C) &nbsp;3</button>
                 <button class="opt" onclick="check(this,'ap2',false)">D) &nbsp;18</button>
             </div>
-            <div class="prob-fb" id="fb-ap2"></div>
+            <div class="prob-fb" id="fb-ap2" role="status"></div>
         </div>
 
         <div class="prob" id="ap3">
@@ -1722,7 +1736,7 @@
                 <button class="opt" onclick="check(this,'ap3',true )">C) &nbsp;7</button>
                 <button class="opt" onclick="check(this,'ap3',false)">D) &nbsp;8</button>
             </div>
-            <div class="prob-fb" id="fb-ap3"></div>
+            <div class="prob-fb" id="fb-ap3" role="status"></div>
         </div>
 
         <div style="margin-top:1.5rem;text-align:right;">
@@ -1783,8 +1797,8 @@
 
         <div class="emt-table" id="emtTable"></div>
 
-        <div class="emt-tally" id="emtTally">&nbsp;</div>
-        <div class="hq-fb" id="emtFb"></div>
+        <div class="emt-tally" id="emtTally" aria-live="polite">&nbsp;</div>
+        <div class="hq-fb" id="emtFb" role="status"></div>
 
         <div class="hq-input-row" style="margin-top:1rem;">
             <button class="conv-btn" style="margin-top:0;" onclick="emtRandom()">⚄ New Problem</button>
@@ -1838,7 +1852,7 @@
                 <button class="opt" onclick="check(this,'pp1',false)">C) &nbsp;18</button>
                 <button class="opt" onclick="check(this,'pp1',false)">D) &nbsp;20</button>
             </div>
-            <div class="prob-fb" id="fb-pp1"></div>
+            <div class="prob-fb" id="fb-pp1" role="status"></div>
         </div>
 
         <div class="prob" id="pp2">
@@ -1849,7 +1863,7 @@
                 <button class="opt" onclick="check(this,'pp2',true )">C) &nbsp;45</button>
                 <button class="opt" onclick="check(this,'pp2',false)">D) &nbsp;48</button>
             </div>
-            <div class="prob-fb" id="fb-pp2"></div>
+            <div class="prob-fb" id="fb-pp2" role="status"></div>
         </div>
 
         <div class="prob" id="pp3">
@@ -1860,7 +1874,7 @@
                 <button class="opt" onclick="check(this,'pp3',false)">C) &nbsp;49</button>
                 <button class="opt" onclick="check(this,'pp3',false)">D) &nbsp;77</button>
             </div>
-            <div class="prob-fb" id="fb-pp3"></div>
+            <div class="prob-fb" id="fb-pp3" role="status"></div>
         </div>
 
         <div style="margin-top:1.5rem;text-align:right;">
@@ -1885,7 +1899,7 @@
             <span class="q-cat" id="qcat">NUMBERS</span>
             <p class="q-text" id="qtext">Loading…</p>
             <div class="q-opts" id="qopts"></div>
-            <div class="q-fb"  id="qfb"></div>
+            <div class="q-fb"  id="qfb" role="status"></div>
             <button class="q-next" id="qnext" onclick="nextQ()">NEXT QUESTION →</button>
         </div>
 
@@ -1927,8 +1941,13 @@ const stars = Array.from({length:220},()=>({
     ph: Math.random() * Math.PI * 2
 }));
 
+// Respect "reduce motion": draw the stars once and keep them still
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+const scrollBehavior = () => reduceMotion.matches ? 'auto' : 'smooth';
+let starsVisible = true, starsRunning = false;
+
 let t = 0;
-(function tick() {
+function drawStars() {
     ctx.clearRect(0,0,canvas.width,canvas.height);
     t += .012;
     stars.forEach(s => {
@@ -1942,8 +1961,28 @@ let t = 0;
         ctx.fillStyle = g;
         ctx.fill();
     });
+}
+
+function tick() {
+    if (!starsVisible || reduceMotion.matches) { starsRunning = false; return; }
+    drawStars();
     requestAnimationFrame(tick);
-})();
+}
+
+function startStars() {
+    drawStars();   // always paint at least one frame (the still version for reduced motion)
+    if (!starsRunning && starsVisible && !reduceMotion.matches) { starsRunning = true; requestAnimationFrame(tick); }
+}
+
+// Pause the animation while the hero is scrolled off-screen — saves CPU and battery during lessons
+new IntersectionObserver(([entry]) => {
+    starsVisible = entry.isIntersecting;
+    if (starsVisible) startStars();
+// -1px top margin: opening a lesson leaves the hero's bottom edge exactly at y=0, which would still count as visible
+}, { rootMargin: '-1px 0px 0px 0px' }).observe(document.querySelector('.hero'));
+reduceMotion.addEventListener('change', startStars);
+window.addEventListener('resize', drawStars);
+startStars();
 
 /* ============================================================ NAV */
 // Enter/Space activate non-button elements marked role="button" (the lesson list)
@@ -1955,18 +1994,20 @@ document.addEventListener('keydown', e => {
 });
 
 function enterTemple() {
-    document.getElementById('mainNav').scrollIntoView({behavior:'smooth'});
+    document.getElementById('mainNav').scrollIntoView({behavior: scrollBehavior()});
 }
 
 function show(name) {
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(b => { b.classList.remove('active'); b.removeAttribute('aria-current'); });
     document.getElementById('sec-'+name).classList.add('active');
-    document.querySelector(`[data-sec="${name}"]`).classList.add('active');
+    const navBtn = document.querySelector(`[data-sec="${name}"]`);
+    navBtn.classList.add('active');
+    navBtn.setAttribute('aria-current', 'page');
     // The nav is sticky, so scrolling *it* into view is a no-op once stuck — scroll to the new section instead
     const nav = document.getElementById('mainNav');
     const sec = document.getElementById('sec-'+name);
-    window.scrollTo({ top: sec.offsetTop - nav.offsetHeight, behavior: 'smooth' });
+    window.scrollTo({ top: sec.offsetTop - nav.offsetHeight, behavior: scrollBehavior() });
 }
 
 /* ============================================================ PRACTICE */
@@ -2700,7 +2741,7 @@ function resetSection(sec) {
     const badge = document.getElementById('badge-' + sec);
     if (badge) badge.classList.remove('earned');
     saveProgress();
-    document.getElementById(SECTION_PROBS[sec][0]).scrollIntoView({behavior:'smooth', block:'center'});
+    document.getElementById(SECTION_PROBS[sec][0]).scrollIntoView({behavior: scrollBehavior(), block:'center'});
 }
 
 // Inject ✓ badge spans into each nav button and a reset button into each practice card
@@ -2712,6 +2753,7 @@ function resetSection(sec) {
             b.className  = 'nav-badge';
             b.id         = 'badge-' + sec;
             b.textContent = '✓';
+        b.setAttribute('aria-hidden', 'true');
             btn.appendChild(b);
         }
         const lastProb = document.getElementById(SECTION_PROBS[sec].at(-1));
