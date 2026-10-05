@@ -9,7 +9,7 @@
 
 [![GitHub Pages](https://img.shields.io/badge/Live%20Site-GitHub%20Pages-gold?style=for-the-badge&logo=github&logoColor=black)](https://highviewone.github.io/EgyptianMath/)
 [![Single File](https://img.shields.io/badge/Stack-HTML%20%2F%20CSS%20%2F%20JS-lapis?style=for-the-badge&color=1B3F8A)](index.html)
-[![No Dependencies](https://img.shields.io/badge/Dependencies-None-2ABFBF?style=for-the-badge&color=2ABFBF)]()
+[![No Build Step](https://img.shields.io/badge/Build%20Step-None-2ABFBF?style=for-the-badge&color=2ABFBF)](index.html)
 [![License: MIT](https://img.shields.io/badge/License-MIT-C9A227?style=for-the-badge)](LICENSE)
 
 [**→ Open the site**](https://highviewone.github.io/EgyptianMath/)
@@ -20,7 +20,7 @@
 
 ## What is this?
 
-Temple of Numbers is a **single-page, zero-dependency** educational website that teaches core middle-school math concepts through the lens of ancient Egyptian history and culture. No install, no login — just open it in a browser.
+Temple of Numbers is a **single-page, no-build** educational website that teaches core middle-school math concepts through the lens of ancient Egyptian history and culture. No install, no login — just open it in a browser.
 
 ## Features
 
