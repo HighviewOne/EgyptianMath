@@ -26,13 +26,13 @@ Temple of Numbers is a **single-page, no-build** educational website that teache
 
 | Section | What you'll learn | Interactive tools |
 |---|---|---|
-| 📜 **Introduction** | Story of Egyptian mathematics | — |
+| ☥ **Introduction** | Story of Egyptian mathematics | — |
 | 𓏤 **Numbers** | Hieroglyphic numeral system | Converter + Speed Quiz |
 | 𓂀 **Fractions** | Eye of Horus unit fractions | — |
-| 📐 **Geometry** | Pyramid formulas (area, volume, seked) | Pyramid Builder |
-| 𓂓 **Algebra** | Rhind Papyrus "aha" problems | — |
-| 🔢 **Patterns** | Doubling sequences | Multiplication Trainer |
-| 🏆 **Grand Quiz** | All five topics, 15 questions | Rank title at end |
+| △ **Geometry** | Pyramid formulas (area, volume, seked) | Pyramid Builder |
+| ∞ **Algebra** | Rhind Papyrus "aha" problems | — |
+| ✦ **Patterns** | Doubling sequences | Multiplication Trainer |
+| ⊕ **Grand Quiz** | All five topics, 15 questions | Rank title at end |
 
 ### Highlights
 
@@ -44,6 +44,7 @@ Temple of Numbers is a **single-page, no-build** educational website that teache
 - **Saved progress** — your practice answers and the nav-tab badge (lit once every problem in a lesson is answered) are saved in `localStorage`; a "↺ Reset these problems" button under each lesson's practice lets you try again
 - **Grand Quiz** — 15-question final challenge (3 per lesson, answer order shuffled each time) with an Egyptian rank title at the end
 - **Shareable lesson links** — every lesson has its own URL (e.g. [`#geometry`](https://highviewone.github.io/EgyptianMath/#geometry)), so teachers can link straight to it and the browser's Back button moves between lessons
+- **Phone-friendly** — one swipeable row of lesson tabs, and canvases drawn at full screen resolution so the starfield and Pyramid Builder stay sharp
 - **Accessible** — feedback is announced to screen readers, text meets WCAG contrast, and animations stop when the device's *reduce motion* setting is on (the starfield also pauses whenever it's scrolled off-screen)
 
 ## Tech stack
@@ -52,7 +53,7 @@ Temple of Numbers is a **single-page, no-build** educational website that teache
 |---|---|
 | Structure | HTML5 |
 | Style | CSS3 (custom properties, grid, canvas) |
-| Logic | Vanilla JavaScript (ES2020) |
+| Logic | Vanilla JavaScript (ES2022) |
 | Fonts | Cinzel + Crimson Text + Noto Sans Egyptian Hieroglyphs via Google Fonts (so hieroglyphs render on every device) |
 | Deploy | GitHub Pages (main branch root) |
 
