@@ -36,13 +36,14 @@ Temple of Numbers is a **single-page, zero-dependency** educational website that
 
 ### Highlights
 
-- **Hieroglyph Number Converter** — type any number and see it written in Egyptian hieroglyphs
+- **Hieroglyph Number Converter** — type any number up to 9,999,999 and see it written in Egyptian hieroglyphs (try 1,000,000 to meet the god Heh 𓁨)
 - **Hieroglyph Speed Quiz** — read hieroglyphs, type the Arabic numeral; builds a streak counter
 - **Interactive Pyramid Builder** — drag sliders for base and height; canvas redraws live with area, volume, slant height, and seked
 - **Egyptian Multiplication Trainer** — build the doubling table, tap the rows that sum to the multiplier, and read off the answer; tracks solved count and streak
 - **15 practice problems** (3 per lesson) with instant feedback and "☥ Show me how →" step-by-step solutions
 - **Saved progress** — your practice answers and the nav-tab badge (lit once every problem in a lesson is answered) are saved in `localStorage`; a "↺ Reset these problems" button under each lesson's practice lets you try again
-- **Grand Quiz** — 15-question final challenge (3 per lesson) with an Egyptian rank title at the end
+- **Grand Quiz** — 15-question final challenge (3 per lesson, answer order shuffled each time) with an Egyptian rank title at the end
+- **Shareable lesson links** — every lesson has its own URL (e.g. [`#geometry`](https://highviewone.github.io/EgyptianMath/#geometry)), so teachers can link straight to it and the browser's Back button moves between lessons
 - **Accessible** — feedback is announced to screen readers, text meets WCAG contrast, and animations stop when the device's *reduce motion* setting is on (the starfield also pauses whenever it's scrolled off-screen)
 
 ## Tech stack
